@@ -1,16 +1,10 @@
----
-title: Numbers
-parent: Recipes
-nav_order: 3
----
-
 # Working with numbers
 
 `fp-ts` is not a math library, but there are some good facilities we can use to work with numbers. Because the examples below use abstract concepts, e.g. [Monoid](../modules/Monoid.ts)s, many of the examples below would work with other types of data, not just numbers.
 
 ## Min/max
 
-```ts
+```code
 import { boundedNumber } from "fp-ts/lib/Bounded";
 import { fold, getJoinMonoid, getMeetMonoid } from "fp-ts/lib/Monoid";
 
@@ -23,7 +17,7 @@ max([5, 2, 3]); // 5
 
 ## Sums and products
 
-```ts
+```code
 import { fold, monoidProduct, monoidSum } from "fp-ts/lib/Monoid";
 
 const sum = fold(monoidSum);
@@ -35,7 +29,7 @@ product([1, 2, 3, 4]); // 24
 
 ## Working with nested structures
 
-```ts
+```code
 import { getStructMonoid, Monoid, monoidSum } from "fp-ts/lib/Monoid";
 
 type Point = {
@@ -53,7 +47,7 @@ monoidPoint.concat({ x: 0, y: 3 }, { x: 2, y: 4 }); // { x: 2, y: 7 }
 
 To check whether the resulting `Point` is positive, create a predicate:
 
-```ts
+```code
 import { getFunctionMonoid, Monoid, monoidAll } from "fp-ts/lib/Monoid";
 
 type Point = {
@@ -78,7 +72,7 @@ isPositiveXY({ x: -1, y: -1 }); // false
 
 ## Working with optional values
 
-```ts
+```code
 import { fold, monoidProduct, monoidSum } from "fp-ts/lib/Monoid";
 import { getApplyMonoid, none, some } from "fp-ts/lib/Option";
 
@@ -94,7 +88,7 @@ product([some(2), some(3), some(4)]); // some(24)
 
 This also works for [Either](../modules/Either.ts)s, but note that folding on `Left` values does not work the same way as folding on `Right` values.
 
-```ts
+```code
 import { getApplyMonoid, left, right } from "fp-ts/lib/Either";
 import { fold, monoidProduct, monoidSum } from "fp-ts/lib/Monoid";
 

@@ -1,9 +1,3 @@
----
-title: Equality
-parent: Recipes
-nav_order: 1
----
-
 # How to determine if two things are equal
 
 With `fp-ts` you can test whether two values are equal using a `Eq`. You can also compose equality functions to test deep structures and create your own definitions of equality.
@@ -12,7 +6,7 @@ We show the most common usages here, but if you need more ways to check for equa
 
 ## Primitive equality
 
-```ts
+```code
 import { eqBoolean, eqDate, eqNumber, eqString } from "fp-ts/lib/Eq";
 
 eqBoolean.equals(true, true); // true
@@ -23,7 +17,7 @@ eqString.equals("Cyndi", "Cyndi"); // true
 
 ## Compare structures
 
-```ts
+```code
 import { Eq, getStructEq, eqNumber } from "fp-ts/lib/Eq";
 
 type Point = {
@@ -41,7 +35,7 @@ eqPoint.equals({ x: 0, y: 0 }, { x: 0, y: 0 }); // true
 
 This structure can be combined further:
 
-```ts
+```code
 type Vector = {
   from: Point;
   to: Point;
@@ -60,7 +54,7 @@ eqVector.equals(
 
 ## Compare arrays
 
-```ts
+```code
 import { eqString } from "fp-ts/lib/Eq";
 import { getEq } from "fp-ts/lib/Array";
 
@@ -71,7 +65,7 @@ eqArrayOfStrings.equals(["Time", "After", "Time"], ["Time", "After", "Time"]); /
 
 Test the equality of structures nested within arrays:
 
-```ts
+```code
 import { Eq, getStructEq, eqNumber } from "fp-ts/lib/Eq";
 import { getEq } from "fp-ts/lib/Array";
 
@@ -103,7 +97,7 @@ eqArrayOfPoints.equals(
 
 In this example, two users are equal if their `userId` field is equal.
 
-```ts
+```code
 import { contramap, eqNumber } from "fp-ts/lib/Eq";
 
 type User = {
@@ -124,7 +118,7 @@ eqUserId.equals({ userId: 1, name: "Giulio" }, { userId: 2, name: "Giulio" }); /
 
 Many data types provide `Eq` instances. Here's [Option](../modules/Option.ts):
 
-```ts
+```code
 import { getEq, none, some } from "fp-ts/lib/Option";
 import { eqNumber } from "fp-ts/lib/Eq";
 
@@ -137,7 +131,7 @@ E.equals(none, none); // true
 
 It works similarly for [Either](../modules/Either.ts) and other types where it is possible to determine equality:
 
-```ts
+```code
 import { getEq, left, right } from "fp-ts/lib/Either";
 import { eqNumber, eqString } from "fp-ts/lib/Eq";
 

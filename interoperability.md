@@ -1,22 +1,14 @@
----
-title: Work with non-functional code
-parent: Recipes
-nav_order: 5
----
-
 # How to work with non-functional code using fp-ts
 
 Sometimes you are forced to interoperate with code not written in a functional style, let's see how to deal with it.
 
 ## Sentinels
 
-<dl>
-  <dt>Use case</dt><dd>an API that may fail and returns a special value of the codomain.</dd>
-  <dt>Example</dt><dd><code>Array.prototype.findIndex</code></dd>
-  <dt>Solution</dt><dd><a href="../modules/Option.ts">Option</a></dd>
-</dl>
+- **Use case** – an API that may fail and returns a special value of the codomain.
+- **Example** – <code>Array.prototype.findIndex</code>
+- **Solution** – <a href="../modules/Option.ts">Option</a>
 
-```ts
+```code
 import { Option, none, some } from "fp-ts/lib/Option";
 
 function findIndex<A>(
@@ -30,13 +22,11 @@ function findIndex<A>(
 
 ## undefined and null
 
-<dl>
-  <dt>Use case</dt><dd>an API that may fail and returns undefined (or null).</dd>
-  <dt>Example</dt><dd><code>Array.prototype.find</code></dd>
-  <dt>Solution</dt><dd><a href="../modules/Option.ts">Option</a>, <a href="../modules/Option.ts#fromnullable-function">fromNullable</a></dd>
-</dl>
+- **Use case** – an API that may fail and returns undefined (or null).
+- **Example** – <code>Array.prototype.find</code>
+- **Solution** – <a href="../modules/Option.ts">Option</a>, <a href="../modules/Option.ts#fromnullable-function">fromNullable</a>
 
-```ts
+```code
 import { Option, fromNullable } from "fp-ts/lib/Option";
 
 function find<A>(as: Array<A>, predicate: (a: A) => boolean): Option<A> {
@@ -46,13 +36,11 @@ function find<A>(as: Array<A>, predicate: (a: A) => boolean): Option<A> {
 
 ## Exceptions
 
-<dl>
-  <dt>Use case</dt><dd>an API that may throw.</dd>
-  <dt>Example</dt><dd><code>JSON.parse</code></dd>
-  <dt>Solution</dt><dd><a href="../modules/Either.ts">Either</a>, <a href="../modules/Either.ts#trycatch-function">tryCatch</a></dd>
-</dl>
+- **Use case** – an API that may throw.
+- **Example** – <code>JSON.parse</code>
+- **Solution** – <a href="../modules/Either.ts">Either</a>, <a href="../modules/Either.ts#trycatch-function">tryCatch</a>
 
-```ts
+```code
 import { Either, tryCatch } from "fp-ts/lib/Either";
 
 function parse(s: string): Either<Error, unknown> {
@@ -65,13 +53,11 @@ function parse(s: string): Either<Error, unknown> {
 
 ## Random values
 
-<dl>
-  <dt>Use case</dt><dd>an API that returns a non deterministic value.</dd>
-  <dt>Example</dt><dd><code>Math.random</code></dd>
-  <dt>Solution</dt><dd><a href="../modules/IO.ts">IO</a></dd>
-</dl>
+- **Use case** – an API that returns a non deterministic value.
+- **Example** – <code>Math.random</code>
+- **Solution** – <a href="../modules/IO.ts">IO</a>
 
-```ts
+```code
 import { IO } from "fp-ts/lib/IO";
 
 const random: IO<number> = () => Math.random();
@@ -79,13 +65,11 @@ const random: IO<number> = () => Math.random();
 
 ## Synchronous side effects
 
-<dl>
-  <dt>Use case</dt><dd>an API that reads and/or writes to a global state.</dd>
-  <dt>Example</dt><dd><code>localStorage.getItem</code></dd>
-  <dt>Solution</dt><dd><a href="../modules/IO.ts">IO</a></dd>
-</dl>
+- **Use case** – an API that reads and/or writes to a global state.
+- **Example** – <code>localStorage.getItem</code>
+- **Solution** – <a href="../modules/IO.ts">IO</a>
 
-```ts
+```code
 import { Option, fromNullable } from "fp-ts/lib/Option";
 import { IO } from "fp-ts/lib/IO";
 
@@ -94,13 +78,11 @@ function getItem(key: string): IO<Option<string>> {
 }
 ```
 
-<dl>
-  <dt>Use case</dt><dd>an API that reads and/or writes to a global state and may throw.</dd>
-  <dt>Example</dt><dd><code>readFileSync</code></dd>
-  <dt>Solution</dt><dd><a href="../modules/IOEither.ts">IOEither</a>, <a href="../modules/IOEither.ts#trycatch-function">tryCatch</a></dd>
-</dl>
+- **Use case** – an API that reads and/or writes to a global state and may throw.
+- **Example** – <code>readFileSync</code>
+- **Solution** – <a href="../modules/IOEither.ts">IOEither</a>, <a href="../modules/IOEither.ts#trycatch-function">tryCatch</a>
 
-```ts
+```code
 import * as fs from "fs";
 import { IOEither, tryCatch } from "fp-ts/lib/IOEither";
 
@@ -114,13 +96,11 @@ function readFileSync(path: string): IOEither<Error, string> {
 
 ## Asynchronous side effects
 
-<dl>
-  <dt>Use case</dt><dd>an API that performs an asynchronous computation.</dd>
-  <dt>Example</dt><dd>reading from standard input</dd>
-  <dt>Solution</dt><dd><a href="../modules/Task.ts">Task</a></dd>
-</dl>
+- **Use case** – an API that performs an asynchronous computation.
+- **Example** – reading from standard input
+- **Solution** – <a href="../modules/Task.ts">Task</a>
 
-```ts
+```code
 const read: Task<string> = () =>
   new Promise<string>(resolve => {
     const rl = createInterface({
@@ -134,13 +114,11 @@ const read: Task<string> = () =>
   });
 ```
 
-<dl>
-  <dt>Use case</dt><dd>an API that performs an asynchronous computation and may reject.</dd>
-  <dt>Example</dt><dd>fetch</dd>
-  <dt>Solution</dt><dd><a href="../modules/TaskEither.ts">TaskEither</a>, <a href="../modules/TaskEither.ts#trycatch-function">tryCatch</a></dd>
-</dl>
+- **Use case** – an API that performs an asynchronous computation and may reject.
+- **Example** – fetch
+- **Solution** – <a href="../modules/TaskEither.ts">TaskEither</a>, <a href="../modules/TaskEither.ts#trycatch-function">tryCatch</a>
 
-```ts
+```code
 import { TaskEither, tryCatch } from "fp-ts/lib/TaskEither";
 
 function get(url: string): TaskEither<Error, string> {

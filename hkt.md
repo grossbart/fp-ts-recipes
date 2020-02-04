@@ -1,14 +1,8 @@
----
-title: Write type class instances
-parent: Recipes
-nav_order: 6
----
-
 # How to write type class instances for your data type
 
 Let's start from a simple data structure: `Identity`
 
-```ts
+```code
 // Identity.ts
 
 export type Identity<A> = A;
@@ -18,7 +12,7 @@ export type Identity<A> = A;
 
 Let's see how to add an instance of the `Functor` type class for `Identity`
 
-```ts
+```code
 // Identity.ts
 
 import { Functor1 } from "fp-ts/lib/Functor";
@@ -44,7 +38,7 @@ export const identity: Functor1<URI> = {
 
 Here's the definition of `Functor1`
 
-```ts
+```code
 // fp-ts/lib/Functor.ts
 
 export interface Functor1<F extends URIS> {
@@ -57,13 +51,13 @@ So what's `URItoKind`, `URIS` and `Kind`?
 
 `URItoKind` is type-level map, it maps a `URI` to a concrete data type, and is populated using the [module augmentation](https://www.typescriptlang.org/docs/handbook/declaration-merging.html) feature
 
-```ts
+```code
 // fp-ts/lib/HKT.ts
 
 export interface URItoKind<A> {}
 ```
 
-```ts
+```code
 // Identity.ts
 
 declare module "fp-ts/lib/HKT" {
@@ -84,7 +78,7 @@ There's another triple for that: `URItoKind2`, `URIS2` and `Kind2`
 
 Example: `Either`
 
-```ts
+```code
 // Either.ts
 
 import { Functor2 } from "fp-ts/lib/Functor";
@@ -120,7 +114,7 @@ export const either: Functor2<URI> = {
 
 And here's the definition of `Functor2`
 
-```ts
+```code
 // fp-ts/lib/Functor.ts
 
 export interface Functor2<F extends URIS2> {
@@ -133,7 +127,7 @@ export interface Functor2<F extends URIS2> {
 
 Let's see how to type `lift`
 
-```ts
+```code
 import { HKT } from "fp-ts/lib/HKT";
 
 export function lift<F>(
@@ -145,7 +139,7 @@ export function lift<F>(
 
 Here's the definition of `HKT`
 
-```ts
+```code
 // fp-ts/lib/HKT.ts
 
 export interface HKT<URI, A> {
@@ -164,7 +158,7 @@ There are other `HKT<n>` types defined in the `fp-ts/lib/HKT.ts`, one for each k
 
 There's a problem though, this doesn't type check
 
-```ts
+```code
 const double = (n: number): number => n * 2;
 
 //                        v-- the Functor instance of Identity
@@ -179,7 +173,7 @@ Argument of type 'Functor2<"Either">' is not assignable to parameter of type 'Fu
 
 We need to add some overloading, one for each kind we want to support
 
-```ts
+```code
 export function lift<F extends URIS2>(
   F: Functor2<F>
 ): <A, B>(f: (a: A) => B) => <E>(fa: Kind2<F, E, A>) => Kind2<F, E, B>;
@@ -198,7 +192,7 @@ export function lift<F>(
 
 Now we can lift `double` to both `Identity` and `Either`
 
-```ts
+```code
 //                          v-- the Functor instance of Identity
 const doubleIdentity = lift(identity)(double);
 
