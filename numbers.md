@@ -1,6 +1,6 @@
 # Working with numbers
 
-`fp-ts` is not a math library, but there are some good facilities we can use to work with numbers. Because the examples below use abstract concepts, e.g. [Monoid](../modules/Monoid.ts)s, many of the examples below would work with other types of data, not just numbers.
+`fp-ts` is not a math library, but there are some good facilities we can use to work with numbers. Because the examples below use abstract concepts, e.g. [Monoid](https://gcanti.github.io/fp-ts/modules/Monoid.ts)s, many of the examples below would work with other types of data, not just numbers.
 
 ## Min/max
 
@@ -86,7 +86,7 @@ product([some(2), none, some(4)]); // none
 product([some(2), some(3), some(4)]); // some(24)
 ```
 
-This also works for [Either](../modules/Either.ts)s, but note that folding on `Left` values does not work the same way as folding on `Right` values.
+This also works for [Either](https://gcanti.github.io/fp-ts/modules/Either.ts)s, but note that folding on `Left` values does not work the same way as folding on `Right` values.
 
 ```code
 import { getApplyMonoid, left, right } from "fp-ts/lib/Either";

@@ -2,7 +2,7 @@
 
 ## Tasks that always succeed
 
-If you're working with asynchronous tasks that are guaranteed to succeed, use [Task](../modules/Task.ts).
+If you're working with asynchronous tasks that are guaranteed to succeed, use [Task](https://gcanti.github.io/fp-ts/modules/Task.ts).
 
 ```code
 import * as T from "fp-ts/lib/Task";
@@ -16,7 +16,7 @@ deepThought().then(n => {
 
 ## Tasks that may fail
 
-If you're working with asynchronous tasks that may fail, use [TaskEither](../modules/TaskEither.ts). If the JSON in this example is malformed (try it!), an "I'm sorry" message is displayed.
+If you're working with asynchronous tasks that may fail, use [TaskEither](https://gcanti.github.io/fp-ts/modules/TaskEither.ts). If the JSON in this example is malformed (try it!), an "I'm sorry" message is displayed.
 
 ```code
 import * as E from "fp-ts/lib/Either";
@@ -166,12 +166,34 @@ import { array } from "fp-ts/lib/Array";
 import { fold } from "fp-ts/lib/Monoid";
 ```
 
-|                                                                                                           | Promise                            | Task                                  | TaskEither                                              |
-| --------------------------------------------------------------------------------------------------------- | ---------------------------------- | ------------------------------------- | ------------------------------------------------------- |
-| resolve to success                                                                                        | `Promise.resolve(value)`           | `T.task.of(value)`                    | `TE.taskEither.of(value)` or `TE.right(value)`          |
-| resolve to failure                                                                                        | `Promise.reject(value)`            | N/A                                   | `TE.left(value)`                                        |
-| transform the result of a task with the function `f`                                                      | `promise.then(f)`                  | `T.task.map(task, f)`                 | `T.taskEither.map(taskEither, f)`                       |
-| perform a task depending on the result of a previous one                                                  | `promise.then(r => getPromise(r))` | `T.task.chain(task, r => getTask(r))` | `T.taskEither.chain(taskEither, r => getTaskEither(r))` |
-| execute an array of tasks in parallel                                                                     | `Promise.all(promises)`            | `array.sequence(T.task)(tasks)`       | `array.sequence(TE.taskEither)(taskEithers)`            |
-| execute an array of tasks in parallel, collecting all failures and successes                              | `Promise.allSettled(promises)`     | N/A                                   | `array.sequence(T.task)(taskEithers)`                   |
-| execute an array of tasks and succeed/fail with a single value as soon as one of the tasks succeeds/fails | `Promise.race(promises)`           | `fold(T.getRaceMonoid())(tasks)`      | `fold(T.getRaceMonoid())(taskEithers)`                  |
+```table
+rows:
+  - Action: resolve to success
+    Promise: Promise.resolve(value)
+    Task: T.task.of(value)
+    TaskEither: TE.taskEither.of(value) or TE.right(value)
+  - Action: resolve to success
+    Promise: Promise.reject(value)
+    Task: N/A
+    TaskEither: TE.left(value)
+  - Action: transform the result of a task with the function "f"
+    Promise: promise.then(f)
+    Task: T.task.map(task, f)
+    TaskEither: T.taskEither.map(taskEither, f)
+  - Action: perform a task depending on the result of a previous one
+    Promise: promise.then(r => getPromise(r))
+    Task: T.task.chain(task, r => getTask(r))
+    TaskEither: T.taskEither.chain(taskEither, r => getTaskEither(r))
+  - Action: execute an array of tasks in parallel
+    Promise: Promise.all(promises)
+    Task: array.sequence(T.task)(tasks)
+    TaskEither: array.sequence(TE.taskEither)(taskEithers)
+  - Action: execute an array of tasks in parallel, collecting all failures and successes
+    Promise: Promise.allSettled(promises)
+    Task: N/A
+    TaskEither: array.sequence(T.task)(taskEithers)
+  - Action: execute an array of tasks and succeed/fail with a single value as soon as one of the tasks succeeds/fails
+    Promise: Promise.race(promises)
+    Task: fold(T.getRaceMonoid())(tasks)
+    TaskEither: fold(T.getRaceMonoid())(taskEithers)
+```

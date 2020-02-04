@@ -2,7 +2,7 @@
 
 With `fp-ts` you can test whether two values are equal using a `Eq`. You can also compose equality functions to test deep structures and create your own definitions of equality.
 
-We show the most common usages here, but if you need more ways to check for equality, be sure to read the [Eq](../modules/Eq.ts) documentation page.
+We show the most common usages here, but if you need more ways to check for equality, be sure to read the [Eq](https://gcanti.github.io/fp-ts/modules/Eq.ts) documentation page.
 
 ## Primitive equality
 
@@ -116,7 +116,7 @@ eqUserId.equals({ userId: 1, name: "Giulio" }, { userId: 2, name: "Giulio" }); /
 
 ## More `Eq` instances
 
-Many data types provide `Eq` instances. Here's [Option](../modules/Option.ts):
+Many data types provide `Eq` instances. Here's [Option](https://gcanti.github.io/fp-ts/modules/Option.ts):
 
 ```code
 import { getEq, none, some } from "fp-ts/lib/Option";
@@ -129,7 +129,7 @@ E.equals(none, some(4)); // false
 E.equals(none, none); // true
 ```
 
-It works similarly for [Either](../modules/Either.ts) and other types where it is possible to determine equality:
+It works similarly for [Either](https://gcanti.github.io/fp-ts/modules/Either.ts) and other types where it is possible to determine equality:
 
 ```code
 import { getEq, left, right } from "fp-ts/lib/Either";

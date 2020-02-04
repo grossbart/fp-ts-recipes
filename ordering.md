@@ -1,14 +1,14 @@
 # How to determine the order of data
 
-If you need to decide on the order of two values, you can make use of the `compare` method provided by `Ord` instances. Ordering builds on [equality](./equality).
+If you need to decide on the order of two values, you can make use of the `compare` method provided by `Ord` instances. Ordering builds on [equality](/equality).
 
-Note that `compare` returns an [Ordering](../modules/Ordering.ts), which is one of these values `-1 | 0 | 1`. We say that
+Note that `compare` returns an [Ordering](https://gcanti.github.io/fp-ts/modules/Ordering.ts), which is one of these values `-1 | 0 | 1`. We say that
 
 - `x < y` if and only if `compare(x, y)` is equal to `-1`
 - `x` is equal to `y` if and only if `compare(x, y)` is equal to `0`
 - `x > y` if and only if `compare(x, y)` is equal to `1`
 
-We show the most common usages here, but if you need more ways to order your data, be sure to read the [Ord](../modules/Ord.ts) documentation page.
+We show the most common usages here, but if you need more ways to order your data, be sure to read the [Ord](https://gcanti.github.io/fp-ts/modules/Ord.ts) documentation page.
 
 ## Primitive comparisons
 
@@ -124,7 +124,7 @@ console.log(sort(diameterOrd)(planets)); // Mercury, Mars, Venus, Earth, ...
 
 ## More Ord instances
 
-Many data types provide `Ord` instances. Here's [Option](../modules/Option.ts):
+Many data types provide `Ord` instances. Here's [Option](https://gcanti.github.io/fp-ts/modules/Option.ts):
 
 ```code
 import { getOrd, none, some } from "fp-ts/lib/Option";
@@ -138,7 +138,7 @@ O.compare(some(1), some(2)); // -1
 O.compare(some(1), some(1)); // 0
 ```
 
-It works similarly for [Tuple](../modules/Tuple.ts)s and other types where it is possible to determine order:
+It works similarly for [Tuple](https://gcanti.github.io/fp-ts/modules/Tuple.ts)s and other types where it is possible to determine order:
 
 ```code
 import { ordNumber, ordString, getTupleOrd } from "fp-ts/lib/Ord";

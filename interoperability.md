@@ -5,8 +5,8 @@ Sometimes you are forced to interoperate with code not written in a functional s
 ## Sentinels
 
 - **Use case** – an API that may fail and returns a special value of the codomain.
-- **Example** – <code>Array.prototype.findIndex</code>
-- **Solution** – <a href="../modules/Option.ts">Option</a>
+- **Example** – `Array.prototype.findIndex`
+- **Solution** – [Option](https://gcanti.github.io/fp-ts/modules/Option.ts)
 
 ```code
 import { Option, none, some } from "fp-ts/lib/Option";
@@ -23,8 +23,8 @@ function findIndex<A>(
 ## undefined and null
 
 - **Use case** – an API that may fail and returns undefined (or null).
-- **Example** – <code>Array.prototype.find</code>
-- **Solution** – <a href="../modules/Option.ts">Option</a>, <a href="../modules/Option.ts#fromnullable-function">fromNullable</a>
+- **Example** – `Array.prototype.find`
+- **Solution** – [Option](https://gcanti.github.io/fp-ts/modules/Option.ts), [fromNullable](https://gcanti.github.io/fp-ts/modules/Option.ts#fromnullable-function)
 
 ```code
 import { Option, fromNullable } from "fp-ts/lib/Option";
@@ -37,8 +37,8 @@ function find<A>(as: Array<A>, predicate: (a: A) => boolean): Option<A> {
 ## Exceptions
 
 - **Use case** – an API that may throw.
-- **Example** – <code>JSON.parse</code>
-- **Solution** – <a href="../modules/Either.ts">Either</a>, <a href="../modules/Either.ts#trycatch-function">tryCatch</a>
+- **Example** – `JSON.parse`
+- **Solution** – [Either](https://gcanti.github.io/fp-ts/modules/Either.ts), [tryCatch](https://gcanti.github.io/fp-ts/modules/Either.ts#trycatch-function)
 
 ```code
 import { Either, tryCatch } from "fp-ts/lib/Either";
@@ -54,8 +54,8 @@ function parse(s: string): Either<Error, unknown> {
 ## Random values
 
 - **Use case** – an API that returns a non deterministic value.
-- **Example** – <code>Math.random</code>
-- **Solution** – <a href="../modules/IO.ts">IO</a>
+- **Example** – `Math.random`
+- **Solution** – [IO](https://gcanti.github.io/fp-ts/modules/IO.ts)
 
 ```code
 import { IO } from "fp-ts/lib/IO";
@@ -66,8 +66,8 @@ const random: IO<number> = () => Math.random();
 ## Synchronous side effects
 
 - **Use case** – an API that reads and/or writes to a global state.
-- **Example** – <code>localStorage.getItem</code>
-- **Solution** – <a href="../modules/IO.ts">IO</a>
+- **Example** – `localStorage.getItem`
+- **Solution** – [IO](https://gcanti.github.io/fp-ts/modules/IO.ts)
 
 ```code
 import { Option, fromNullable } from "fp-ts/lib/Option";
@@ -79,8 +79,8 @@ function getItem(key: string): IO<Option<string>> {
 ```
 
 - **Use case** – an API that reads and/or writes to a global state and may throw.
-- **Example** – <code>readFileSync</code>
-- **Solution** – <a href="../modules/IOEither.ts">IOEither</a>, <a href="../modules/IOEither.ts#trycatch-function">tryCatch</a>
+- **Example** – `readFileSync`
+- **Solution** – [IOEither](https://gcanti.github.io/fp-ts/modules/IOEither.ts), [tryCatch](https://gcanti.github.io/fp-ts/modules/IOEither.ts#trycatch-function)
 
 ```code
 import * as fs from "fs";
@@ -98,7 +98,7 @@ function readFileSync(path: string): IOEither<Error, string> {
 
 - **Use case** – an API that performs an asynchronous computation.
 - **Example** – reading from standard input
-- **Solution** – <a href="../modules/Task.ts">Task</a>
+- **Solution** – [Task](https://gcanti.github.io/fp-ts/modules/Task.ts)
 
 ```code
 const read: Task<string> = () =>
@@ -116,7 +116,7 @@ const read: Task<string> = () =>
 
 - **Use case** – an API that performs an asynchronous computation and may reject.
 - **Example** – fetch
-- **Solution** – <a href="../modules/TaskEither.ts">TaskEither</a>, <a href="../modules/TaskEither.ts#trycatch-function">tryCatch</a>
+- **Solution** – [TaskEither](https://gcanti.github.io/fp-ts/modules/TaskEither.ts), [tryCatch](https://gcanti.github.io/fp-ts/modules/TaskEither.ts#trycatch-function)
 
 ```code
 import { TaskEither, tryCatch } from "fp-ts/lib/TaskEither";
