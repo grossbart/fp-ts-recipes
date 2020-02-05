@@ -8,7 +8,7 @@ Sometimes you are forced to interoperate with code not written in a functional s
 - **Example** – `Array.prototype.findIndex`
 - **Solution** – [Option](https://gcanti.github.io/fp-ts/modules/Option.ts)
 
-```code
+```code|lang-ts
 import { Option, none, some } from "fp-ts/lib/Option";
 
 function findIndex<A>(
@@ -26,7 +26,7 @@ function findIndex<A>(
 - **Example** – `Array.prototype.find`
 - **Solution** – [Option](https://gcanti.github.io/fp-ts/modules/Option.ts), [fromNullable](https://gcanti.github.io/fp-ts/modules/Option.ts#fromnullable-function)
 
-```code
+```code|lang-ts
 import { Option, fromNullable } from "fp-ts/lib/Option";
 
 function find<A>(as: Array<A>, predicate: (a: A) => boolean): Option<A> {
@@ -40,7 +40,7 @@ function find<A>(as: Array<A>, predicate: (a: A) => boolean): Option<A> {
 - **Example** – `JSON.parse`
 - **Solution** – [Either](https://gcanti.github.io/fp-ts/modules/Either.ts), [tryCatch](https://gcanti.github.io/fp-ts/modules/Either.ts#trycatch-function)
 
-```code
+```code|lang-ts
 import { Either, tryCatch } from "fp-ts/lib/Either";
 
 function parse(s: string): Either<Error, unknown> {
@@ -57,7 +57,7 @@ function parse(s: string): Either<Error, unknown> {
 - **Example** – `Math.random`
 - **Solution** – [IO](https://gcanti.github.io/fp-ts/modules/IO.ts)
 
-```code
+```code|lang-ts
 import { IO } from "fp-ts/lib/IO";
 
 const random: IO<number> = () => Math.random();
@@ -69,7 +69,7 @@ const random: IO<number> = () => Math.random();
 - **Example** – `localStorage.getItem`
 - **Solution** – [IO](https://gcanti.github.io/fp-ts/modules/IO.ts)
 
-```code
+```code|lang-ts
 import { Option, fromNullable } from "fp-ts/lib/Option";
 import { IO } from "fp-ts/lib/IO";
 
@@ -82,7 +82,7 @@ function getItem(key: string): IO<Option<string>> {
 - **Example** – `readFileSync`
 - **Solution** – [IOEither](https://gcanti.github.io/fp-ts/modules/IOEither.ts), [tryCatch](https://gcanti.github.io/fp-ts/modules/IOEither.ts#trycatch-function)
 
-```code
+```code|lang-ts
 import * as fs from "fs";
 import { IOEither, tryCatch } from "fp-ts/lib/IOEither";
 
@@ -100,7 +100,7 @@ function readFileSync(path: string): IOEither<Error, string> {
 - **Example** – reading from standard input
 - **Solution** – [Task](https://gcanti.github.io/fp-ts/modules/Task.ts)
 
-```code
+```code|lang-ts
 const read: Task<string> = () =>
   new Promise<string>(resolve => {
     const rl = createInterface({
@@ -118,7 +118,7 @@ const read: Task<string> = () =>
 - **Example** – fetch
 - **Solution** – [TaskEither](https://gcanti.github.io/fp-ts/modules/TaskEither.ts), [tryCatch](https://gcanti.github.io/fp-ts/modules/TaskEither.ts#trycatch-function)
 
-```code
+```code|lang-ts
 import { TaskEither, tryCatch } from "fp-ts/lib/TaskEither";
 
 function get(url: string): TaskEither<Error, string> {

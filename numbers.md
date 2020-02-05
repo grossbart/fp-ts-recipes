@@ -4,7 +4,7 @@
 
 ## Min/max
 
-```code
+```code|lang-ts
 import { boundedNumber } from "fp-ts/lib/Bounded";
 import { fold, getJoinMonoid, getMeetMonoid } from "fp-ts/lib/Monoid";
 
@@ -17,7 +17,7 @@ max([5, 2, 3]); // 5
 
 ## Sums and products
 
-```code
+```code|lang-ts
 import { fold, monoidProduct, monoidSum } from "fp-ts/lib/Monoid";
 
 const sum = fold(monoidSum);
@@ -29,7 +29,7 @@ product([1, 2, 3, 4]); // 24
 
 ## Working with nested structures
 
-```code
+```code|lang-ts
 import { getStructMonoid, Monoid, monoidSum } from "fp-ts/lib/Monoid";
 
 type Point = {
@@ -47,7 +47,7 @@ monoidPoint.concat({ x: 0, y: 3 }, { x: 2, y: 4 }); // { x: 2, y: 7 }
 
 To check whether the resulting `Point` is positive, create a predicate:
 
-```code
+```code|lang-ts
 import { getFunctionMonoid, Monoid, monoidAll } from "fp-ts/lib/Monoid";
 
 type Point = {
@@ -72,7 +72,7 @@ isPositiveXY({ x: -1, y: -1 }); // false
 
 ## Working with optional values
 
-```code
+```code|lang-ts
 import { fold, monoidProduct, monoidSum } from "fp-ts/lib/Monoid";
 import { getApplyMonoid, none, some } from "fp-ts/lib/Option";
 
@@ -88,7 +88,7 @@ product([some(2), some(3), some(4)]); // some(24)
 
 This also works for [Either](https://gcanti.github.io/fp-ts/modules/Either.ts)s, but note that folding on `Left` values does not work the same way as folding on `Right` values.
 
-```code
+```code|lang-ts
 import { getApplyMonoid, left, right } from "fp-ts/lib/Either";
 import { fold, monoidProduct, monoidSum } from "fp-ts/lib/Monoid";
 

@@ -4,7 +4,7 @@
 
 If you're working with asynchronous tasks that are guaranteed to succeed, use [Task](https://gcanti.github.io/fp-ts/modules/Task.ts).
 
-```code
+```code|lang-ts
 import * as T from "fp-ts/lib/Task";
 
 const deepThought: T.Task<number> = () => Promise.resolve(42);
@@ -18,7 +18,7 @@ deepThought().then(n => {
 
 If you're working with asynchronous tasks that may fail, use [TaskEither](https://gcanti.github.io/fp-ts/modules/TaskEither.ts). If the JSON in this example is malformed (try it!), an "I'm sorry" message is displayed.
 
-```code
+```code|lang-ts
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/pipeable";
@@ -45,13 +45,13 @@ fetchGreeting()
 
 JavaScript provides `Promises.all` to wait for a list of Promises.
 
-```code
+```code|lang-ts
 Promise.all([Promise.resolve(1), Promise.resolve(2)]).then(console.log); // [1, 2]
 ```
 
 With `Task`s you can achieve the same using `sequence`. Both the `Promise.all` and the `sequence` approach run in parallel and wait until all results have arrived before they proceed.
 
-```code
+```code|lang-ts
 import * as A from "fp-ts/lib/Array";
 import * as T from "fp-ts/lib/Task";
 
@@ -65,7 +65,7 @@ A.array
 
 If you need to run a list of `Task`s in sequence, i.e. you have to wait for one `Task` to finish before you run the second `Task`, you can use the `taskSeq` instance.
 
-```code
+```code|lang-ts
 import * as A from "fp-ts/lib/Array";
 import * as T from "fp-ts/lib/Task";
 import { pipe } from "fp-ts/lib/pipeable";
@@ -91,7 +91,7 @@ A.array.sequence(taskSeq)(tasks)();
 
 What if the types are different? We can't use `sequence` anymore
 
-```code
+```code|lang-ts
 import * as A from "fp-ts/lib/Array";
 import * as T from "fp-ts/lib/Task";
 
@@ -108,7 +108,7 @@ Argument of type '(Task<number> | Task<string>)[]' is not assignable to paramete
 
 However we can use `sequenceT` (or `sequenceS`)
 
-```code
+```code|lang-ts
 import { sequenceT, sequenceS } from "fp-ts/lib/Apply";
 import * as T from "fp-ts/lib/Task";
 
@@ -123,7 +123,7 @@ const y = sequenceS(T.task)({ a: T.of(1), b: T.of("hello") });
 
 If you need the result of on task before you can continue with the next, you can `chain` the tasks like so:
 
-```code
+```code|lang-ts
 import * as T from "fp-ts/lib/Task";
 import { pipe } from "fp-ts/lib/pipeable";
 
@@ -138,7 +138,7 @@ pipe(
 
 If you have a list of items that you need to `map` over before running them in `sequence`, you can use `traverse`, which is a shortcut for doing both operations in one step.
 
-```code
+```code|lang-ts
 import * as A from "fp-ts/lib/Array";
 import * as T from "fp-ts/lib/Task";
 import { access, constants } from "fs";
@@ -159,7 +159,7 @@ A.array
 
 Following is a table comparing `Task`/`TaskEither` with `Promise`. It assumes the following imports:
 
-```code
+```code|lang-ts
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { array } from "fp-ts/lib/Array";

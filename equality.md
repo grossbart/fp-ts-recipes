@@ -6,7 +6,7 @@ We show the most common usages here, but if you need more ways to check for equa
 
 ## Primitive equality
 
-```code
+```code|lang-ts
 import { eqBoolean, eqDate, eqNumber, eqString } from "fp-ts/lib/Eq";
 
 eqBoolean.equals(true, true); // true
@@ -17,7 +17,7 @@ eqString.equals("Cyndi", "Cyndi"); // true
 
 ## Compare structures
 
-```code
+```code|lang-ts
 import { Eq, getStructEq, eqNumber } from "fp-ts/lib/Eq";
 
 type Point = {
@@ -35,7 +35,7 @@ eqPoint.equals({ x: 0, y: 0 }, { x: 0, y: 0 }); // true
 
 This structure can be combined further:
 
-```code
+```code|lang-ts
 type Vector = {
   from: Point;
   to: Point;
@@ -54,7 +54,7 @@ eqVector.equals(
 
 ## Compare arrays
 
-```code
+```code|lang-ts
 import { eqString } from "fp-ts/lib/Eq";
 import { getEq } from "fp-ts/lib/Array";
 
@@ -65,7 +65,7 @@ eqArrayOfStrings.equals(["Time", "After", "Time"], ["Time", "After", "Time"]); /
 
 Test the equality of structures nested within arrays:
 
-```code
+```code|lang-ts
 import { Eq, getStructEq, eqNumber } from "fp-ts/lib/Eq";
 import { getEq } from "fp-ts/lib/Array";
 
@@ -97,7 +97,7 @@ eqArrayOfPoints.equals(
 
 In this example, two users are equal if their `userId` field is equal.
 
-```code
+```code|lang-ts
 import { contramap, eqNumber } from "fp-ts/lib/Eq";
 
 type User = {
@@ -118,7 +118,7 @@ eqUserId.equals({ userId: 1, name: "Giulio" }, { userId: 2, name: "Giulio" }); /
 
 Many data types provide `Eq` instances. Here's [Option](https://gcanti.github.io/fp-ts/modules/Option.ts):
 
-```code
+```code|lang-ts
 import { getEq, none, some } from "fp-ts/lib/Option";
 import { eqNumber } from "fp-ts/lib/Eq";
 
@@ -131,7 +131,7 @@ E.equals(none, none); // true
 
 It works similarly for [Either](https://gcanti.github.io/fp-ts/modules/Either.ts) and other types where it is possible to determine equality:
 
-```code
+```code|lang-ts
 import { getEq, left, right } from "fp-ts/lib/Either";
 import { eqNumber, eqString } from "fp-ts/lib/Eq";
 
