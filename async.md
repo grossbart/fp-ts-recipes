@@ -172,7 +172,7 @@ rows:
     Promise: Promise.resolve(value)
     Task: T.task.of(value)
     TaskEither: TE.taskEither.of(value) or TE.right(value)
-  - Action: resolve to success
+  - Action: resolve to failure
     Promise: Promise.reject(value)
     Task: N/A
     TaskEither: TE.left(value)
