@@ -57,7 +57,7 @@ import * as T from "fp-ts/lib/Task";
 
 const tasks = [T.of(1), T.of(2)];
 A.array
-  .sequence(task)(tasks)()
+  .sequence(T.task)(tasks)()
   .then(console.log); // [ 1, 2 ]
 ```
 
@@ -81,10 +81,10 @@ const tasks = [
 ];
 
 // Parallel: logs 'second' then 'first'
-A.array.sequence(task)(tasks)();
+A.array.sequence(T.task)(tasks)();
 
 // Sequential: logs 'first' then 'second'
-A.array.sequence(taskSeq)(tasks)();
+A.array.sequence(T.taskSeq)(tasks)();
 ```
 
 ## Work with tasks with different type
