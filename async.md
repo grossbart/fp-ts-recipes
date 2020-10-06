@@ -191,7 +191,7 @@ rows:
   - Action: execute an array of tasks in parallel, collecting all failures and successes
     Promise: Promise.allSettled(promises)
     Task: N/A
-    TaskEither: array.sequence(T.task)(taskEithers)
+    TaskEither: array.sequence(TE.taskEither)(taskEithers)
   - Action: execute an array of tasks and succeed/fail with a single value as soon as one of the tasks succeeds/fails
     Promise: Promise.race(promises)
     Task: fold(T.getRaceMonoid())(tasks)
