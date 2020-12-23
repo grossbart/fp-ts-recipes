@@ -19,22 +19,24 @@ deepThought().then(n => {
 If you're working with asynchronous tasks that may fail, use [TaskEither](https://gcanti.github.io/fp-ts/modules/TaskEither.ts). If the JSON in this example is malformed (try it!), an "I'm sorry" message is displayed.
 
 ```code|lang-ts
-import * as E from "fp-ts/lib/Either";
-import * as TE from "fp-ts/lib/TaskEither";
+import * as Either from "fp-ts/lib/Either";
+import * as TaskEither from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/pipeable";
 
-const fetchGreeting = TE.tryCatch<Error, { name: string }>(
+type Named = { name: string }
+
+const fetchGreeting = TaskEither.tryCatch<Error, Named>(
   () => new Promise(resolve => resolve(JSON.parse('{ "name": "Carol" }'))),
   reason => new Error(String(reason))
 );
 
 fetchGreeting()
-  .then(e =>
+  .then(either =>
     pipe(
-      e,
-      E.fold(
+      either,
+      Either.fold(
         err => `I'm sorry, I don't know who you are. (${err.message})`,
-        x => `Hello, ${x.name}!`
+        (x: Named) => `Hello, ${x.name}!`
       )
     )
   )
