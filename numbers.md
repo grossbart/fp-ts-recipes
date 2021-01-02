@@ -5,11 +5,10 @@
 ## Min/max
 
 ```ts
-import { boundedNumber } from "fp-ts/lib/Bounded";
-import { fold, getJoinMonoid, getMeetMonoid } from "fp-ts/lib/Monoid";
+import { bounded, monoid } from "fp-ts";
 
-const min = fold(getMeetMonoid(boundedNumber));
-const max = fold(getJoinMonoid(boundedNumber));
+const min = monoid.fold(monoid.getMeetMonoid(bounded.boundedNumber));
+const max = monoid.fold(monoid.getJoinMonoid(bounded.boundedNumber));
 
 min([5, 2, 3]); // 2
 max([5, 2, 3]); // 5
@@ -18,10 +17,10 @@ max([5, 2, 3]); // 5
 ## Sums and products
 
 ```ts
-import { fold, monoidProduct, monoidSum } from "fp-ts/lib/Monoid";
+import { monoid } from "fp-ts";
 
-const sum = fold(monoidSum);
-const product = fold(monoidProduct);
+const sum = monoid.fold(monoid.monoidSum);
+const product = monoid.fold(monoid.monoidProduct);
 
 sum([1, 2, 3, 4]); // 10
 product([1, 2, 3, 4]); // 24
@@ -30,16 +29,16 @@ product([1, 2, 3, 4]); // 24
 ## Working with nested structures
 
 ```ts
-import { getStructMonoid, Monoid, monoidSum } from "fp-ts/lib/Monoid";
+import { monoid } from "fp-ts";
 
 type Point = {
   x: number;
   y: number;
 };
 
-const monoidPoint: Monoid<Point> = getStructMonoid({
-  x: monoidSum,
-  y: monoidSum
+const monoidPoint: monoid.Monoid<Point> = monoid.getStructMonoid({
+  x: monoid.monoidSum,
+  y: monoid.monoidSum
 });
 
 monoidPoint.concat({ x: 0, y: 3 }, { x: 2, y: 4 }); // { x: 2, y: 7 }
@@ -48,15 +47,15 @@ monoidPoint.concat({ x: 0, y: 3 }, { x: 2, y: 4 }); // { x: 2, y: 7 }
 To check whether the resulting `Point` is positive, create a predicate:
 
 ```ts
-import { getFunctionMonoid, Monoid, monoidAll } from "fp-ts/lib/Monoid";
+import { monoid } from "fp-ts";
 
 type Point = {
   x: number;
   y: number;
 };
 
-const monoidPredicate: Monoid<(p: Point) => boolean> = getFunctionMonoid(
-  monoidAll
+const monoidPredicate: monoid.Monoid<(p: Point) => boolean> = monoid.getFunctionMonoid(
+    monoid.monoidAll
 )<Point>();
 
 const isPositiveX = (p: Point): boolean => p.x >= 0;
@@ -73,30 +72,28 @@ isPositiveXY({ x: -1, y: -1 }); // false
 ## Working with optional values
 
 ```ts
-import { fold, monoidProduct, monoidSum } from "fp-ts/lib/Monoid";
-import { getApplyMonoid, none, some } from "fp-ts/lib/Option";
+import { monoid, option } from "fp-ts";
 
-const sum = fold(getApplyMonoid(monoidSum));
-const product = fold(getApplyMonoid(monoidProduct));
+const sum = monoid.fold(option.getApplyMonoid(monoid.monoidSum));
+const product = monoid.fold(option.getApplyMonoid(monoid.monoidProduct));
 
-sum([some(2), none, some(4)]); // none
-sum([some(2), some(3), some(4)]); // some(9)
+sum([option.some(2), option.none, option.some(4)]); // option.none
+sum([option.some(2), option.some(3), option.some(4)]); // option.some(9)
 
-product([some(2), none, some(4)]); // none
-product([some(2), some(3), some(4)]); // some(24)
+product([option.some(2), option.none, option.some(4)]); // option.none
+product([option.some(2), option.some(3), option.some(4)]); // option.some(24)
 ```
 
 This also works for [Either](https://gcanti.github.io/fp-ts/modules/Either.ts)s, but note that folding on `Left` values does not work the same way as folding on `Right` values.
 
 ```ts
-import { getApplyMonoid, left, right } from "fp-ts/lib/Either";
-import { fold, monoidProduct, monoidSum } from "fp-ts/lib/Monoid";
+import { either, monoid } from "fp-ts";
 
-const sum = fold(getApplyMonoid(monoidSum));
-const product = fold(getApplyMonoid(monoidProduct));
+const sum = monoid.fold(either.getApplyMonoid(monoid.monoidSum));
+const product = monoid.fold(either.getApplyMonoid(monoid.monoidProduct));
 
-sum([right(2), left(3), right(4)]); // left(3)
-sum([right(2), right(3), right(4)]); // right(9)
-product([right(2), left(3), left(4)]); // left(3) <- it's the first left value
-product([right(2), right(3), right(4)]); // right(24)
+sum([either.right(2), either.left(3), either.right(4)]); // either.left(3)
+sum([either.right(2), either.right(3), either.right(4)]); // either.right(9)
+product([either.right(2), either.left(3), either.left(4)]); // either.left(3) <- it's the first either.left value
+product([either.right(2), either.right(3), either.right(4)]); // either.right(24)
 ```

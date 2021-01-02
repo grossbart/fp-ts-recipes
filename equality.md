@@ -7,27 +7,27 @@ We show the most common usages here, but if you need more ways to check for equa
 ## Primitive equality
 
 ```ts
-import { eqBoolean, eqDate, eqNumber, eqString } from "fp-ts/lib/Eq";
+import { eq } from "fp-ts";
 
-eqBoolean.equals(true, true); // true
-eqDate.equals(new Date("1984-01-27"), new Date("1984-01-27")); // true
-eqNumber.equals(3, 3); // true
-eqString.equals("Cyndi", "Cyndi"); // true
+eq.eqBoolean.equals(true, true); // true
+eq.eqDate.equals(new Date("1984-01-27"), new Date("1984-01-27")); // true
+eq.eqNumber.equals(3, 3); // true
+eq.eqString.equals("Cyndi", "Cyndi"); // true
 ```
 
 ## Compare structures
 
 ```ts
-import { Eq, getStructEq, eqNumber } from "fp-ts/lib/Eq";
+import { eq } from "fp-ts";
 
 type Point = {
   x: number;
   y: number;
 };
 
-const eqPoint: Eq<Point> = getStructEq({
-  x: eqNumber,
-  y: eqNumber
+const eqPoint: eq.Eq<Point> = eq.getStructEq({
+  x: eq.eqNumber,
+  y: eq.eqNumber
 });
 
 eqPoint.equals({ x: 0, y: 0 }, { x: 0, y: 0 }); // true
@@ -36,12 +36,24 @@ eqPoint.equals({ x: 0, y: 0 }, { x: 0, y: 0 }); // true
 This structure can be combined further:
 
 ```ts
+import { eq } from "fp-ts";
+
+type Point = {
+    x: number;
+    y: number;
+};
+
+const eqPoint: eq.Eq<Point> = eq.getStructEq({
+    x: eq.eqNumber,
+    y: eq.eqNumber
+});
+
 type Vector = {
   from: Point;
   to: Point;
 };
 
-const eqVector: Eq<Vector> = getStructEq({
+const eqVector: eq.Eq<Vector> = eq.getStructEq({
   from: eqPoint,
   to: eqPoint
 });
@@ -55,10 +67,9 @@ eqVector.equals(
 ## Compare arrays
 
 ```ts
-import { eqString } from "fp-ts/lib/Eq";
-import { getEq } from "fp-ts/lib/Array";
+import { array, eq } from "fp-ts";
 
-const eqArrayOfStrings = getEq(eqString);
+const eqArrayOfStrings = array.getEq(eq.eqString);
 
 eqArrayOfStrings.equals(["Time", "After", "Time"], ["Time", "After", "Time"]); // true
 ```
@@ -66,20 +77,19 @@ eqArrayOfStrings.equals(["Time", "After", "Time"], ["Time", "After", "Time"]); /
 Test the equality of structures nested within arrays:
 
 ```ts
-import { Eq, getStructEq, eqNumber } from "fp-ts/lib/Eq";
-import { getEq } from "fp-ts/lib/Array";
+import { array, eq } from "fp-ts";
 
 type Point = {
   x: number;
   y: number;
 };
 
-const eqPoint: Eq<Point> = getStructEq({
-  x: eqNumber,
-  y: eqNumber
+const eqPoint: eq.Eq<Point> = eq.getStructEq({
+  x: eq.eqNumber,
+  y: eq.eqNumber
 });
 
-const eqArrayOfPoints: Eq<Array<Point>> = getEq(eqPoint);
+const eqArrayOfPoints: eq.Eq<Array<Point>> = array.getEq(eqPoint);
 
 eqArrayOfPoints.equals(
   [
@@ -98,14 +108,14 @@ eqArrayOfPoints.equals(
 In this example, two users are equal if their `userId` field is equal.
 
 ```ts
-import { contramap, eqNumber } from "fp-ts/lib/Eq";
+import { eq } from "fp-ts";
 
 type User = {
   userId: number;
   name: string;
 };
 
-const eqUserId = contramap((user: User) => user.userId)(eqNumber);
+const eqUserId = eq.contramap((user: User) => user.userId)(eq.eqNumber);
 
 eqUserId.equals(
   { userId: 1, name: "Giulio" },
@@ -119,25 +129,23 @@ eqUserId.equals({ userId: 1, name: "Giulio" }, { userId: 2, name: "Giulio" }); /
 Many data types provide `Eq` instances. Here's [Option](https://gcanti.github.io/fp-ts/modules/Option.ts):
 
 ```ts
-import { getEq, none, some } from "fp-ts/lib/Option";
-import { eqNumber } from "fp-ts/lib/Eq";
+import { eq, option } from "fp-ts";
 
-const E = getEq(eqNumber);
+const E = option.getEq(eq.eqNumber);
 
-E.equals(some(3), some(3)); // true
-E.equals(none, some(4)); // false
-E.equals(none, none); // true
+E.equals(option.some(3), option.some(3)); // true
+E.equals(option.none, option.some(4)); // false
+E.equals(option.none, option.none); // true
 ```
 
 It works similarly for [Either](https://gcanti.github.io/fp-ts/modules/Either.ts) and other types where it is possible to determine equality:
 
 ```ts
-import { getEq, left, right } from "fp-ts/lib/Either";
-import { eqNumber, eqString } from "fp-ts/lib/Eq";
+import { either, eq } from "fp-ts";
 
-const E = getEq(eqString, eqNumber);
+const E = either.getEq(eq.eqString, eq.eqNumber);
 
-E.equals(right(3), right(3)); // true
-E.equals(left("3"), right(3)); // false
-E.equals(left("3"), left("3")); // true
+E.equals(either.right(3), either.right(3)); // true
+E.equals(either.left("3"), either.right(3)); // false
+E.equals(either.left("3"), either.left("3")); // true
 ```

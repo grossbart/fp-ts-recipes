@@ -13,21 +13,23 @@ We show the most common usages here, but if you need more ways to order your dat
 ## Primitive comparisons
 
 ```ts
-import { ordBoolean, ordDate, ordNumber, ordString } from "fp-ts/lib/Ord";
+import { ord } from "fp-ts";
 
-ordNumber.compare(4, 5); // -1
-ordNumber.compare(5, 5); // 0
-ordNumber.compare(6, 5); // 1
+ord.ordNumber.compare(4, 5); // -1
+ord.ordNumber.compare(5, 5); // 0
+ord.ordNumber.compare(6, 5); // 1
 
-ordBoolean.compare(true, false); // 1
-ordDate.compare(new Date("1984-01-27"), new Date("1978-09-23")); // 1
-ordString.compare("Cyndi", "Debbie"); // -1
+ord.ordBoolean.compare(true, false); // 1
+ord.ordDate.compare(new Date("1984-01-27"), new Date("1978-09-23")); // 1
+ord.ordString.compare("Cyndi", "Debbie"); // -1
 ```
 
 Note that all `Ord` instances also define the `equals` method, because it is a prerequisite to be able to compare data.
 
 ```ts
-ordBoolean.equals(false, false); // true
+import { ord } from "fp-ts";
+
+ord.ordBoolean.equals(false, false); // true
 ```
 
 ## Custom comparisons
@@ -35,9 +37,9 @@ ordBoolean.equals(false, false); // true
 You can create custom comparisons using `fromCompare` like so:
 
 ```ts
-import { fromCompare } from "fp-ts/lib/Ord";
+import { ord } from "fp-ts";
 
-const strlenOrd = fromCompare((a: string, b: string) =>
+const strlenOrd = ord.fromCompare((a: string, b: string) =>
   a.length < b.length ? -1 : a.length > b.length ? 1 : 0
 );
 strlenOrd.compare("Hi", "there"); // -1
@@ -47,9 +49,9 @@ strlenOrd.compare("Goodbye", "friend"); // 1
 But most of the time, you can achieve the same result in a simpler way with `contramap`:
 
 ```ts
-import { contramap, ordNumber } from "fp-ts/lib/Ord";
+import { ord } from "fp-ts";
 
-const strlenOrd = contramap((s: string) => s.length)(ordNumber);
+const strlenOrd = ord.contramap((s: string) => s.length)(ord.ordNumber);
 strlenOrd.compare("Hi", "there"); // -1
 strlenOrd.compare("Goodbye", "friend"); // 1
 ```
@@ -59,44 +61,42 @@ strlenOrd.compare("Goodbye", "friend"); // 1
 Take the smaller (`min`) or larger (`max`) element of two, or take the one closest to the given boundaries (`clamp`).
 
 ```ts
-import { clamp, max, min, ordNumber, ordString } from "fp-ts/lib/Ord";
+import { ord } from "fp-ts";
 
-min(ordNumber)(5, 2); // 2
-max(ordNumber)(5, 2); // 5
+ord.min(ord.ordNumber)(5, 2); // 2
+ord.max(ord.ordNumber)(5, 2); // 5
 
-clamp(ordNumber)(3, 7)(2); // 3
-clamp(ordString)("Bar", "Boat")("Ball"); // Bar
+ord.clamp(ord.ordNumber)(3, 7)(2); // 3
+ord.clamp(ord.ordString)("Bar", "Boat")("Ball"); // Bar
 ```
 
 ## Less than, greater than, or in between?
 
 ```ts
-import { between, geq, lt, ordNumber } from "fp-ts/lib/Ord";
+import { ord } from "fp-ts";
 
-lt(ordNumber)(4, 7); // true
-geq(ordNumber)(6, 6); // true
+ord.lt(ord.ordNumber)(4, 7); // true
+ord.geq(ord.ordNumber)(6, 6); // true
 
-between(ordNumber)(6, 9)(7); // true
-between(ordNumber)(6, 9)(6); // true
-between(ordNumber)(6, 9)(9); // true
-between(ordNumber)(6, 9)(12); // false
+ord.between(ord.ordNumber)(6, 9)(7); // true
+ord.between(ord.ordNumber)(6, 9)(6); // true
+ord.between(ord.ordNumber)(6, 9)(9); // true
+ord.between(ord.ordNumber)(6, 9)(12); // false
 ```
 
 ## Sort an array
 
 ```ts
-import { ordNumber } from "fp-ts/lib/Ord";
-import { sort } from "fp-ts/lib/Array";
+import { array, ord } from "fp-ts";
 
-const sortByNumber = sort(ordNumber);
+const sortByNumber = array.sort(ord.ordNumber);
 sortByNumber([3, 1, 2]); // [1, 2, 3]
 ```
 
 Sort an array of objects:
 
 ```ts
-import { contramap, ordNumber } from "fp-ts/lib/Ord";
-import { sort } from "fp-ts/lib/Array";
+import { array, ord } from "fp-ts";
 
 type Planet = {
   name: string;
@@ -115,11 +115,11 @@ const planets: Array<Planet> = [
   { name: "Venus", diameter: 12104, distance: 0.723 }
 ];
 
-const diameterOrd = contramap((x: Planet) => x.diameter)(ordNumber);
-const distanceOrd = contramap((x: Planet) => x.distance)(ordNumber);
+const diameterOrd = ord.contramap((x: Planet) => x.diameter)(ord.ordNumber);
+const distanceOrd = ord.contramap((x: Planet) => x.distance)(ord.ordNumber);
 
-console.log(sort(distanceOrd)(planets)); // Mercury, Venus, Earth, Mars, ...
-console.log(sort(diameterOrd)(planets)); // Mercury, Mars, Venus, Earth, ...
+console.log(array.sort(distanceOrd)(planets)); // Mercury, Venus, Earth, Mars, ...
+console.log(array.sort(diameterOrd)(planets)); // Mercury, Mars, Venus, Earth, ...
 ```
 
 ## More Ord instances
@@ -127,23 +127,22 @@ console.log(sort(diameterOrd)(planets)); // Mercury, Mars, Venus, Earth, ...
 Many data types provide `Ord` instances. Here's [Option](https://gcanti.github.io/fp-ts/modules/Option.ts):
 
 ```ts
-import { getOrd, none, some } from "fp-ts/lib/Option";
-import { ordNumber } from "fp-ts/lib/Ord";
+import { option, ord } from "fp-ts";
 
-const O = getOrd(ordNumber);
-O.compare(none, none); // 0
-O.compare(none, some(1)); // -1
-O.compare(some(1), none); // 1
-O.compare(some(1), some(2)); // -1
-O.compare(some(1), some(1)); // 0
+const O = option.getOrd(ord.ordNumber);
+O.compare(option.none, option.none); // 0
+O.compare(option.none, option.some(1)); // -1
+O.compare(option.some(1), option.none); // 1
+O.compare(option.some(1), option.some(2)); // -1
+O.compare(option.some(1), option.some(1)); // 0
 ```
 
 It works similarly for [Tuple](https://gcanti.github.io/fp-ts/modules/Tuple.ts)s and other types where it is possible to determine order:
 
 ```ts
-import { ordNumber, ordString, getTupleOrd } from "fp-ts/lib/Ord";
+import { ord } from "fp-ts";
 
-const O = getTupleOrd(ordString, ordNumber);
+const O = ord.getTupleOrd(ord.ordString, ord.ordNumber);
 O.compare(["A", 10], ["A", 12]); // -1
 O.compare(["A", 10], ["A", 4]); // 1
 O.compare(["A", 10], ["B", 4]); // -1

@@ -9,6 +9,7 @@
     "test": "literate-ts *.md"
   },
   "devDependencies": {
+    "@types/node": "^14.14.19",
     "docsify-cli": "^4.4.2",
     "fp-ts": "^2.9.3",
     "literate-ts": "^1.1.1",

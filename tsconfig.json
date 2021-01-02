@@ -2,7 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "fp-ts": ["node_modules/fp-ts/es6"]
+      "fp-ts": ["node_modules/fp-ts/es6"],
+      "fp-ts/function": ["node_modules/fp-ts/es6/function"],
     },
     "lib": ["es6", "dom"],
     "noEmit": true,
