@@ -1,0 +1,18 @@
+{
+  "name": "fp-ts-recipes",
+  "description": "Practical examples for using the fp-ts TypeScript library.",
+  "version": "1.0.0",
+  "author": "Peter Gassner <peter@gassner.io>",
+  "license": "MIT",
+  "scripts": {
+    "start": "docsify serve .",
+    "test": "literate-ts *.md"
+  },
+  "devDependencies": {
+    "docsify-cli": "^4.4.2",
+    "fp-ts": "^2.9.3",
+    "literate-ts": "^1.1.1",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.3"
+  }
+}

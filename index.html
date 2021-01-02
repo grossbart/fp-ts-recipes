@@ -1,68 +1,33 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>fp-ts recipes</title>
-  </head>
-  <body>
-    <div id="catalog"></div>
-
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script src="https://unpkg.com/catalog@3/dist/catalog-standalone.min.js"></script>
-    <script src="https://unpkg.com/prismjs@1.19.0/components/prism-typescript.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/victormono@latest/dist/index.min.css">
+    <link rel="stylesheet" href="prism.css">
+</head>
+<body>
+    <div id="app"></div>
     <script>
-      Catalog.render(
-        {
-          title: "fp-ts recipes",
-          theme: {
-            background: "#FFFFFF",
-            brandColor: "#3174c0",
-            linkColor: "#3174c0",
-            pageHeadingBackground: "#3174c0",
-            sidebarColorText: "#999999",
-            sidebarColorTextActive: "#3174c0"
-          },
-          pages: [
-            {
-              path: "/",
-              title: "Introduction",
-              src: "./README.md"
-            },
-            {
-              path: "/async",
-              title: "Async",
-              src: "./async.md"
-            },
-            {
-              path: "/equality",
-              title: "Equality",
-              src: "./equality.md"
-            },
-            {
-              path: "/hkt",
-              title: "Higher-kinded types",
-              src: "./hkt.md"
-            },
-            {
-              path: "/interoperability",
-              title: "Interoperability",
-              src: "./interoperability.md"
-            },
-            {
-              path: "/numbers",
-              title: "Numbers",
-              src: "./numbers.md"
-            },
-            {
-              path: "/ordering",
-              title: "Ordering",
-              src: "./ordering.md"
-            }
-          ]
-        },
-        document.getElementById("catalog")
-      );
+        if (typeof navigator.serviceWorker !== 'undefined') {
+            navigator.serviceWorker.register('sw.js')
+        }
     </script>
-  </body>
+    <script>
+        window.$docsify = {
+            name: 'fp-ts recipes',
+            repo: 'grossbart/fp-ts-recipes',
+            loadSidebar: true,
+            subMaxLevel: 2,
+            auto2top: true,
+            themeColor: "#3174c0",
+        }
+    </script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
+</body>
 </html>

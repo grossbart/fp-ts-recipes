@@ -1,0 +1,7 @@
+- [Introduction](/)
+- [Async](async.md)
+- [Equality](equality.md)
+- [Higher-kinded types](hkt.md)
+- [Interoperability](interoperability.md)
+- [Numbers](numbers.md)
+- [Ordering](ordering.md)
