@@ -38,7 +38,7 @@ type Point = {
 
 const monoidPoint: monoid.Monoid<Point> = monoid.getStructMonoid({
   x: monoid.monoidSum,
-  y: monoid.monoidSum
+  y: monoid.monoidSum,
 });
 
 monoidPoint.concat({ x: 0, y: 3 }, { x: 2, y: 4 }); // { x: 2, y: 7 }
@@ -55,7 +55,7 @@ type Point = {
 };
 
 const monoidPredicate: monoid.Monoid<(p: Point) => boolean> = monoid.getFunctionMonoid(
-    monoid.monoidAll
+  monoid.monoidAll
 )<Point>();
 
 const isPositiveX = (p: Point): boolean => p.x >= 0;

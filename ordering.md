@@ -112,7 +112,7 @@ const planets: Array<Planet> = [
   { name: "Neptune", diameter: 49528, distance: 30.06 },
   { name: "Saturn", diameter: 120660, distance: 9.539 },
   { name: "Uranus", diameter: 51118, distance: 19.18 },
-  { name: "Venus", diameter: 12104, distance: 0.723 }
+  { name: "Venus", diameter: 12104, distance: 0.723 },
 ];
 
 const diameterOrd = ord.contramap((x: Planet) => x.diameter)(ord.ordNumber);

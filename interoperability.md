@@ -9,13 +9,11 @@ Sometimes you are forced to interoperate with code not written in a functional s
 - **Solution** – [Option](https://gcanti.github.io/fp-ts/modules/Option.ts)
 
 <!-- verifier:tsconfig:noUnusedLocals=false -->
+
 ```ts
 import { option } from "fp-ts";
 
-function findIndex<A>(
-  as: Array<A>,
-  predicate: (a: A) => boolean
-): option.Option<number> {
+function findIndex<A>(as: Array<A>, predicate: (a: A) => boolean): option.Option<number> {
   const index = as.findIndex(predicate);
   return index === -1 ? option.none : option.some(index);
 }
@@ -28,6 +26,7 @@ function findIndex<A>(
 - **Solution** – [Option](https://gcanti.github.io/fp-ts/modules/Option.ts), [fromNullable](https://gcanti.github.io/fp-ts/modules/Option.ts#fromnullable-function)
 
 <!-- verifier:tsconfig:noUnusedLocals=false -->
+
 ```ts
 import { option } from "fp-ts";
 
@@ -43,13 +42,14 @@ function find<A>(as: Array<A>, predicate: (a: A) => boolean): option.Option<A> {
 - **Solution** – [Either](https://gcanti.github.io/fp-ts/modules/Either.ts), [tryCatch](https://gcanti.github.io/fp-ts/modules/Either.ts#trycatch-function)
 
 <!-- verifier:tsconfig:noUnusedLocals=false -->
+
 ```ts
 import { either } from "fp-ts";
 
 function parse(s: string): either.Either<Error, unknown> {
   return either.tryCatch(
     () => JSON.parse(s),
-    reason => new Error(String(reason))
+    (reason) => new Error(String(reason))
   );
 }
 ```
@@ -61,6 +61,7 @@ function parse(s: string): either.Either<Error, unknown> {
 - **Solution** – [IO](https://gcanti.github.io/fp-ts/modules/IO.ts)
 
 <!-- verifier:tsconfig:noUnusedLocals=false -->
+
 ```ts
 import { io } from "fp-ts";
 
@@ -74,6 +75,7 @@ const random: io.IO<number> = () => Math.random();
 - **Solution** – [IO](https://gcanti.github.io/fp-ts/modules/IO.ts)
 
 <!-- verifier:tsconfig:noUnusedLocals=false -->
+
 ```ts
 import { io, option } from "fp-ts";
 
@@ -87,6 +89,7 @@ function getItem(key: string): io.IO<option.Option<string>> {
 - **Solution** – [IOEither](https://gcanti.github.io/fp-ts/modules/IOEither.ts), [tryCatch](https://gcanti.github.io/fp-ts/modules/IOEither.ts#trycatch-function)
 
 <!-- verifier:tsconfig:noUnusedLocals=false -->
+
 ```ts
 import * as fs from "fs";
 import { ioEither } from "fp-ts";
@@ -94,7 +97,7 @@ import { ioEither } from "fp-ts";
 function readFileSync(path: string): ioEither.IOEither<Error, string> {
   return ioEither.tryCatch(
     () => fs.readFileSync(path, "utf8"),
-    reason => new Error(String(reason))
+    (reason) => new Error(String(reason))
   );
 }
 ```
@@ -106,17 +109,18 @@ function readFileSync(path: string): ioEither.IOEither<Error, string> {
 - **Solution** – [Task](https://gcanti.github.io/fp-ts/modules/Task.ts)
 
 <!-- verifier:tsconfig:noUnusedLocals=false -->
+
 ```ts
-import { createInterface } from 'readline';
-import { task } from 'fp-ts';
+import { createInterface } from "readline";
+import { task } from "fp-ts";
 
 const read: task.Task<string> = () =>
-  new Promise<string>(resolve => {
+  new Promise<string>((resolve) => {
     const rl = createInterface({
       input: process.stdin,
-      output: process.stdout
+      output: process.stdout,
     });
-    rl.question("", answer => {
+    rl.question("", (answer) => {
       rl.close();
       resolve(answer);
     });
@@ -128,13 +132,14 @@ const read: task.Task<string> = () =>
 - **Solution** – [TaskEither](https://gcanti.github.io/fp-ts/modules/TaskEither.ts), [tryCatch](https://gcanti.github.io/fp-ts/modules/TaskEither.ts#trycatch-function)
 
 <!-- verifier:tsconfig:noUnusedLocals=false -->
+
 ```ts
 import { taskEither } from "fp-ts";
 
 function get(url: string): taskEither.TaskEither<Error, string> {
   return taskEither.tryCatch(
-    () => fetch(url).then(res => res.text()),
-    reason => new Error(String(reason))
+    () => fetch(url).then((res) => res.text()),
+    (reason) => new Error(String(reason))
   );
 }
 ```

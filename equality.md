@@ -27,7 +27,7 @@ type Point = {
 
 const eqPoint: eq.Eq<Point> = eq.getStructEq({
   x: eq.eqNumber,
-  y: eq.eqNumber
+  y: eq.eqNumber,
 });
 
 eqPoint.equals({ x: 0, y: 0 }, { x: 0, y: 0 }); // true
@@ -39,13 +39,13 @@ This structure can be combined further:
 import { eq } from "fp-ts";
 
 type Point = {
-    x: number;
-    y: number;
+  x: number;
+  y: number;
 };
 
 const eqPoint: eq.Eq<Point> = eq.getStructEq({
-    x: eq.eqNumber,
-    y: eq.eqNumber
+  x: eq.eqNumber,
+  y: eq.eqNumber,
 });
 
 type Vector = {
@@ -55,7 +55,7 @@ type Vector = {
 
 const eqVector: eq.Eq<Vector> = eq.getStructEq({
   from: eqPoint,
-  to: eqPoint
+  to: eqPoint,
 });
 
 eqVector.equals(
@@ -86,7 +86,7 @@ type Point = {
 
 const eqPoint: eq.Eq<Point> = eq.getStructEq({
   x: eq.eqNumber,
-  y: eq.eqNumber
+  y: eq.eqNumber,
 });
 
 const eqArrayOfPoints: eq.Eq<Array<Point>> = array.getEq(eqPoint);
@@ -94,11 +94,11 @@ const eqArrayOfPoints: eq.Eq<Array<Point>> = array.getEq(eqPoint);
 eqArrayOfPoints.equals(
   [
     { x: 0, y: 0 },
-    { x: 4, y: 0 }
+    { x: 4, y: 0 },
   ],
   [
     { x: 0, y: 0 },
-    { x: 4, y: 0 }
+    { x: 4, y: 0 },
   ]
 ); // true
 ```
@@ -117,10 +117,7 @@ type User = {
 
 const eqUserId = eq.contramap((user: User) => user.userId)(eq.eqNumber);
 
-eqUserId.equals(
-  { userId: 1, name: "Giulio" },
-  { userId: 1, name: "Giulio Canti" }
-); // true
+eqUserId.equals({ userId: 1, name: "Giulio" }, { userId: 1, name: "Giulio Canti" }); // true
 eqUserId.equals({ userId: 1, name: "Giulio" }, { userId: 2, name: "Giulio" }); // false
 ```
 
