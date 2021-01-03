@@ -5,6 +5,7 @@
     "paths": {
       "fp-ts": ["node_modules/fp-ts/es6"],
       "fp-ts/function": ["node_modules/fp-ts/es6/function"],
+      "fp-ts/Option": ["node_modules/fp-ts/es6/Option"],
     },
 
     "module": "commonjs",

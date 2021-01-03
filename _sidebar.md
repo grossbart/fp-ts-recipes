@@ -1,4 +1,4 @@
-- [Introduction](/)
+- [Basics](basics.md)
 - [Async](async.md)
 - [Equality](equality.md)
 - [Interoperability](interoperability.md)

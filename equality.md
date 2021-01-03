@@ -1,6 +1,6 @@
 # How to determine if two things are equal
 
-With `fp-ts` you can test whether two values are equal using a `Eq`. You can also compose equality functions to test deep structures and create your own definitions of equality.
+With _fp-ts_ you can test whether two values are equal using a `Eq`. You can also compose equality functions to test deep structures and create your own definitions of equality.
 
 We show the most common usages here, but if you need more ways to check for equality, be sure to read the [Eq](https://gcanti.github.io/fp-ts/modules/Eq.ts) documentation page.
 

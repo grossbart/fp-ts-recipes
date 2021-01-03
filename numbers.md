@@ -1,6 +1,6 @@
 # Working with numbers
 
-`fp-ts` is not a math library, but there are some good facilities we can use to work with numbers. Because the examples below use abstract concepts, e.g. [Monoid](https://gcanti.github.io/fp-ts/modules/Monoid.ts)s, many of the examples below would work with other types of data, not just numbers.
+_fp-ts_ is not a math library, but there are some good facilities we can use to work with numbers. Because the examples below use abstract concepts, e.g. [Monoid](https://gcanti.github.io/fp-ts/modules/Monoid.ts)s, many of the examples below would work with other types of data, not just numbers.
 
 ## Min/max
 
