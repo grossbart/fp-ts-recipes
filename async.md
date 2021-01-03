@@ -148,7 +148,7 @@ Following is a table comparing `Task`/`TaskEither` with `Promise`. It assumes th
 
 <!-- verifier:skip -->
 ```ts
-import { task as T, taskEither as TE, array, monoid as M } from "fp-ts";
+import { array as A, monoid as M, task as T, taskEither as TE } from "fp-ts";
 ```
 
 | &nbsp;                                                                                                        | Promise                            | Task                                  | TaskEither                                              |
@@ -157,6 +157,6 @@ import { task as T, taskEither as TE, array, monoid as M } from "fp-ts";
 | **Resolve to failure**                                                                                        | `Promise.reject(value)`            | N/A                                   | `TE.left(value)`                                        |
 | **Transform the result of a task with the function `f`**                                                      | `promise.then(f)`                  | `T.task.map(task, f)`                 | `T.taskEither.map(taskEither, f)`                       |
 | **Perform a task depending on the result of a previous one**                                                  | `promise.then(r => getPromise(r))` | `T.task.chain(task, r => getTask(r))` | `T.taskEither.chain(taskEither, r => getTaskEither(r))` |
-| **Execute an array of tasks in parallel**                                                                     | `Promise.all(promises)`            | `array.sequence(T.task)(tasks)`       | `array.sequence(TE.taskEither)(taskEithers)`            |
-| **Execute an array of tasks in parallel, collecting all failures and successes**                              | `Promise.allSettled(promises)`     | N/A                                   | `array.sequence(TE.taskEither)(taskEithers)`            |
+| **Execute an array of tasks in parallel**                                                                     | `Promise.all(promises)`            | `A.sequence(T.task)(tasks)`           | `A.sequence(TE.taskEither)(taskEithers)`                |
+| **Execute an array of tasks in parallel, collecting all failures and successes**                              | `Promise.allSettled(promises)`     | N/A                                   | `A.sequence(T.task)(taskEithers)`                       |
 | **Execute an array of tasks and succeed/fail with a single value as soon as one of the tasks succeeds/fails** | `Promise.race(promises)`           | `M.fold(T.getRaceMonoid())(tasks)`    | `M.fold(T.getRaceMonoid())(taskEithers)`                |
