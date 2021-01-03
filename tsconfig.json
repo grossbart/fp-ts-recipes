@@ -1,18 +1,23 @@
 {
   "compilerOptions": {
+    "noEmit": true,
     "baseUrl": ".",
     "paths": {
       "fp-ts": ["node_modules/fp-ts/es6"],
       "fp-ts/function": ["node_modules/fp-ts/es6/function"],
     },
-    "lib": ["es6", "dom"],
-    "noEmit": true,
+
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2015",
+    "lib": ["es2015", "dom"],
 
     "strict": true,
+    "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "stripInternal": true,
   }

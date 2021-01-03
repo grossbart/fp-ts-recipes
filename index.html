@@ -1,33 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>fp-ts recipes</title>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/victormono@latest/dist/index.min.css">
-    <link rel="stylesheet" href="prism.css">
-</head>
-<body>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
+    <link rel="stylesheet" href="lib/prism.css" />
+  </head>
+  <body>
     <div id="app"></div>
     <script>
-        if (typeof navigator.serviceWorker !== 'undefined') {
-            navigator.serviceWorker.register('sw.js')
-        }
+      if (typeof navigator.serviceWorker !== "undefined") {
+        navigator.serviceWorker.register("sw.js");
+      }
     </script>
     <script>
-        window.$docsify = {
-            name: 'fp-ts recipes',
-            repo: 'grossbart/fp-ts-recipes',
-            loadSidebar: true,
-            subMaxLevel: 2,
-            auto2top: true,
-            themeColor: "#3174c0",
-        }
+      window.$docsify = {
+        name: "fp-ts recipes",
+        repo: "grossbart/fp-ts-recipes",
+        loadSidebar: true,
+        subMaxLevel: 2,
+        auto2top: true,
+        themeColor: "#3174c0",
+      };
     </script>
     <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
     <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
-</body>
+    <script src="lib/codesandbox.js"></script>
+  </body>
 </html>
