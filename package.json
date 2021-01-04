@@ -5,8 +5,8 @@
   "author": "Peter Gassner <peter@gassner.io>",
   "license": "MIT",
   "scripts": {
-    "start": "docsify serve .",
-    "test": "literate-ts *.md"
+    "start": "docsify serve docs",
+    "test": "literate-ts docs/*.md"
   },
   "dependencies": {
     "@types/node": "^14.14.19",

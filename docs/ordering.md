@@ -1,6 +1,6 @@
 # How to determine the order of data
 
-If you need to decide on the order of two values, you can make use of the `compare` method provided by `Ord` instances. Ordering builds on [equality](/equality.md).
+If you need to decide on the order of two values, you can make use of the `compare` method provided by `Ord` instances. Ordering builds on [equality](equality.md).
 
 Note that `compare` returns an [Ordering](https://gcanti.github.io/fp-ts/modules/Ordering.ts), which is one of these values `-1 | 0 | 1`. We say that
 
