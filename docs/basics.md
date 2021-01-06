@@ -83,7 +83,7 @@ const add5 = (x: number) => x + 5;
 const runPipe = (x: number) => pipe(x, add5);
 const runFlow = flow(add5);
 
-console.log(runPipe(3), runFlow(3)); // 16, 16
+console.log(runPipe(3), runFlow(3)); // 8, 8
 ```
 
 You can learn more about `pipe` and `flow` in the [Practical Guide to fp-ts](https://rlee.dev/writing/practical-guide-to-fp-ts-part-1).
