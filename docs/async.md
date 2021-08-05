@@ -51,10 +51,10 @@ Promise.all([Promise.resolve(1), Promise.resolve(2)]).then(console.log); // [1, 
 With `Task`s you can achieve the same using `sequence`. Both the `Promise.all` and the `sequence` approach run in parallel and wait until all results have arrived before they proceed.
 
 ```ts
-import { array, task } from "fp-ts";
+import { task } from "fp-ts";
 
 const tasks = [task.of(1), task.of(2)];
-array.array.sequence(task.task)(tasks)().then(console.log); // [ 1, 2 ]
+task.sequenceArray(tasks)().then(console.log); // [ 1, 2 ]
 ```
 
 ## Run a list of tasks in sequence
@@ -62,7 +62,7 @@ array.array.sequence(task.task)(tasks)().then(console.log); // [ 1, 2 ]
 If you need to run a list of `Task`s in sequence, i.e. you have to wait for one `Task` to finish before you run the second `Task`, you can use the `taskSeq` instance.
 
 ```ts
-import { array, task } from "fp-ts";
+import { task } from "fp-ts";
 import { pipe } from "fp-ts/function";
 
 const log = <A>(x: A) => {
@@ -76,10 +76,10 @@ const tasks = [
 ];
 
 // Parallel: logs 'second' then 'first'
-array.array.sequence(task.task)(tasks)();
+task.sequenceArray(tasks)();
 
 // Sequential: logs 'first' then 'second'
-array.array.sequence(task.taskSeq)(tasks)();
+task.sequenceSeqArray(tasks)();
 ```
 
 ## Work with tasks with different type
@@ -88,10 +88,10 @@ array.array.sequence(task.taskSeq)(tasks)();
 
 <!-- prettier-ignore-start -->
 ```ts
-import { array, task } from "fp-ts";
+import { task } from "fp-ts";
 
 const tasks = [task.of(1), task.of("hello")];
-array.array.sequence(task.task)(tasks);
+task.sequenceArray(tasks);
                              // ~~~~~ Argument of type '(Task<number> | Task<string>)[]' is not assignable to parameter of type 'Task<number>[]'.
                              //         Type 'Task<number> | Task<string>' is not assignable to type 'Task<number>'.
                              //           Type 'Task<string>' is not assignable to type 'Task<number>'.
@@ -104,9 +104,9 @@ We can use `sequenceT` or `sequenceS` instead.
 ```ts
 import { apply, task } from "fp-ts";
 
-apply.sequenceT(task.task)(task.of(1), task.of("hello")); // type is task.Task<[number, string]>
+apply.sequenceT(task.ApplyPar)(task.of(1), task.of("hello")); // type is task.Task<[number, string]>
 
-apply.sequenceS(task.task)({ a: task.of(1), b: task.of("hello") }); // type is task.Task<{ a: number; b: string; }>
+apply.sequenceS(task.ApplyPar)({ a: task.of(1), b: task.of("hello") }); // type is task.Task<{ a: number; b: string; }>
 ```
 
 ## Work with a list of dependent tasks
@@ -129,7 +129,7 @@ pipe(
 If you have a list of items that you need to `map` over before running them in `sequence`, you can use `traverse`, which is a shortcut for doing both operations in one step.
 
 ```ts
-import { array, task } from "fp-ts";
+import { task } from "fp-ts";
 import { access, constants } from "fs";
 
 const checkPathExists = (path: string) => () =>
@@ -139,7 +139,7 @@ const checkPathExists = (path: string) => () =>
 
 const items = ["/bin", "/no/real/path"];
 
-array.array.traverse(task.task)(items, checkPathExists)().then(console.log); // [ { path: '/bin', exists: true }, { path: '/no/real/path', exists: false } ]
+task.traverseArray(items, checkPathExists)().then(console.log); // [ { path: '/bin', exists: true }, { path: '/no/real/path', exists: false } ]
 ```
 
 ## Comparison with `Promise` methods
