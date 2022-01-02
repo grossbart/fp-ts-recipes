@@ -18,17 +18,18 @@ string.Eq.equals("Cyndi", "Cyndi"); // true
 ## Compare structures
 
 ```ts
-import { eq } from "fp-ts";
-import { Eq } from "fp-ts/Eq";
+import { number } from "fp-ts";
+import { Eq, struct } from "fp-ts/Eq";
 
 type Point = {
   x: number;
   y: number;
 };
 
-const eqPoint: Eq<Point> = {
-  equals: (p1: Point, p2: Point) => p1 === p2 || (p1.x === p2.x && p1.y === p2.y)
-}
+const eqPoint: Eq<Point> = struct({
+  x: number.Eq,
+  y: number.Eq,
+});
 
 eqPoint.equals({ x: 0, y: 0 }, { x: 0, y: 0 }); // true
 ```
@@ -36,29 +37,30 @@ eqPoint.equals({ x: 0, y: 0 }, { x: 0, y: 0 }); // true
 This structure can be combined further:
 
 ```ts
-import { eq } from "fp-ts";
-import { Eq } from "fp-ts/Eq";
+import { number } from "fp-ts";
+import { Eq, struct } from "fp-ts/Eq";
 
 type Point = {
   x: number;
   y: number;
 };
 
-const eqPoint: Eq<Point> = {
-  equals: (p1: Point, p2: Point) => p1 === p2 || (p1.x === p2.x && p1.y === p2.y)
-}
+const eqPoint: Eq<Point> = struct({
+  x: number.Eq,
+  y: number.Eq,
+});
 
 type Vector = {
   from: Point;
   to: Point;
 };
 
-const eqVector: Eq<Vector> = {
-  equals: (v1: Vector, v2: Vector) => v1 === v2 ||
-    (eqPoint.equals(v1.from, v2.from) && eqPoint.equals(v1.to, v2.to))
-}
+const eqVector: Eq<Vector> = struct({
+  from: eqPoint,
+  to: eqPoint,
+});
 
-eqVector.equals(
+const x = eqVector.equals(
   { from: { x: 0, y: 0 }, to: { x: 0, y: 0 } },
   { from: { x: 0, y: 0 }, to: { x: 0, y: 0 } }
 ); // true
@@ -69,7 +71,7 @@ eqVector.equals(
 ```ts
 import { array, string } from "fp-ts";
 
-const eqArrayOfStrings = array.getEq<string>(string.Eq);
+const eqArrayOfStrings = array.getEq(string.Eq);
 
 eqArrayOfStrings.equals(["Time", "After", "Time"], ["Time", "After", "Time"]); // true
 ```
@@ -77,19 +79,20 @@ eqArrayOfStrings.equals(["Time", "After", "Time"], ["Time", "After", "Time"]); /
 Test the equality of structures nested within arrays:
 
 ```ts
-import { array, eq } from "fp-ts";
-import { Eq } from "fp-ts/Eq";
+import { array, number } from "fp-ts";
+import { Eq, struct } from "fp-ts/Eq";
 
 type Point = {
   x: number;
   y: number;
 };
 
-const eqPoint: Eq<Point> = {
-  equals: (p1: Point, p2: Point) => p1 === p2 || (p1.x === p2.x && p1.y === p2.y)
-}
+const eqPoint: Eq<Point> = struct({
+  x: number.Eq,
+  y: number.Eq,
+});
 
-const eqArrayOfPoints = array.getEq<Point>(eqPoint);
+const eqArrayOfPoints = array.getEq(eqPoint);
 
 eqArrayOfPoints.equals(
   [
