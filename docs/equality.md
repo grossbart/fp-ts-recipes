@@ -37,7 +37,7 @@ This structure can be combined further:
 
 ```ts
 import { eq } from "fp-ts";
-import { Eq } from "fp-ts/lib/Eq";
+import { Eq } from "fp-ts/Eq";
 
 type Point = {
   x: number;
