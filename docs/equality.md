@@ -78,7 +78,7 @@ Test the equality of structures nested within arrays:
 
 ```ts
 import { array, eq } from "fp-ts";
-import { Eq } from "fp-ts/lib/Eq";
+import { Eq } from "fp-ts/Eq";
 
 type Point = {
   x: number;
