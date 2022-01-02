@@ -19,7 +19,7 @@ string.Eq.equals("Cyndi", "Cyndi"); // true
 
 ```ts
 import { eq } from "fp-ts";
-import { Eq } from "fp-ts/lib/Eq";
+import { Eq } from "fp-ts/Eq";
 
 type Point = {
   x: number;
