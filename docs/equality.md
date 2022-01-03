@@ -60,7 +60,7 @@ const eqVector: Eq<Vector> = struct({
   to: eqPoint,
 });
 
-const x = eqVector.equals(
+eqVector.equals(
   { from: { x: 0, y: 0 }, to: { x: 0, y: 0 } },
   { from: { x: 0, y: 0 }, to: { x: 0, y: 0 } }
 ); // true
