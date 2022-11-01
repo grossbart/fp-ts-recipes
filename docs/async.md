@@ -92,10 +92,10 @@ import { task } from "fp-ts";
 
 const tasks = [task.of(1), task.of("hello")];
 task.sequenceArray(tasks);
-                             // ~~~~~ Argument of type '(Task<number> | Task<string>)[]' is not assignable to parameter of type 'Task<number>[]'.
-                             //         Type 'Task<number> | Task<string>' is not assignable to type 'Task<number>'.
-                             //           Type 'Task<string>' is not assignable to type 'Task<number>'.
-                             //             Type 'string' is not assignable to type 'number'.
+//                 ~~~~~ Argument of type '(Task<number> | Task<string>)[]' is not assignable to parameter of type 'Task<number>[]'.
+//                         Type 'Task<number> | Task<string>' is not assignable to type 'Task<number>'.
+//                           Type 'Task<string>' is not assignable to type 'Task<number>'.
+//                             Type 'string' is not assignable to type 'number'.
 ```
 <!-- prettier-ignore-end -->
 
