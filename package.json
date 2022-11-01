@@ -9,7 +9,7 @@
     "test": "literate-ts docs/*.md"
   },
   "dependencies": {
-    "@types/node": "^14.14.19",
+    "@types/node": "^16.18.3",
     "fp-ts": "^2.9.3"
   },
   "devDependencies": {
