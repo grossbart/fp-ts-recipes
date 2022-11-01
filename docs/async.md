@@ -130,16 +130,19 @@ If you have a list of items that you need to `map` over before running them in `
 
 ```ts
 import { task } from "fp-ts";
-import { access, constants } from "fs";
+import { pipe } from "fp-ts/function";
 
 const checkPathExists = (path: string) => () =>
   new Promise((resolve) => {
-    access(path, constants.F_OK, (err: unknown) => resolve({ path, exists: !err }));
+    resolve({ path, exists: !path.startsWith('/no/') })
   });
 
-const items = ["/bin", "/no/real/path"];
+const program = pipe(
+  ["/bin", "/no/real/path"],
+  task.traverseArray(checkPathExists)
+)
 
-task.traverseArray(items, checkPathExists)().then(console.log); // [ { path: '/bin', exists: true }, { path: '/no/real/path', exists: false } ]
+program().then(console.log); // [ { path: '/bin', exists: true }, { path: '/no/real/path', exists: false } ]
 ```
 
 ## Comparison with `Promise` methods

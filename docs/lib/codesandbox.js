@@ -69,9 +69,7 @@ function docsifyCodesandboxPlugin(hook) {
               build: "parcel build index.html",
             },
             dependencies: {
-              "@types/node": "^16.18.3",
               "fp-ts": "^2.9",
-              node: "^16.18.3",
             },
             devDependencies: {
               "parcel-bundler": "^1.6.1",

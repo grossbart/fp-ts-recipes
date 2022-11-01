@@ -85,18 +85,17 @@ function getItem(key: string): io.IO<option.Option<string>> {
 ```
 
 - **Use case** – an API that reads and/or writes to a global state and may throw.
-- **Example** – `readFileSync`
+- **Example** – `localStorage.setItem`
 - **Solution** – [IOEither](https://gcanti.github.io/fp-ts/modules/IOEither.ts), [tryCatch](https://gcanti.github.io/fp-ts/modules/IOEither.ts#trycatch-function)
 
 <!-- verifier:tsconfig:noUnusedLocals=false -->
 
 ```ts
-import * as fs from "fs";
 import { ioEither } from "fp-ts";
 
-function readFileSync(path: string): ioEither.IOEither<Error, string> {
+function setItem(key: string, value: string): ioEither.IOEither<Error, void> {
   return ioEither.tryCatch(
-    () => fs.readFileSync(path, "utf8"),
+    () => localStorage.setItem(key, value),
     (reason) => new Error(String(reason))
   );
 }
@@ -105,25 +104,17 @@ function readFileSync(path: string): ioEither.IOEither<Error, string> {
 ## Asynchronous side effects
 
 - **Use case** – an API that performs an asynchronous computation.
-- **Example** – reading from standard input
+- **Example** – waiting
 - **Solution** – [Task](https://gcanti.github.io/fp-ts/modules/Task.ts)
 
 <!-- verifier:tsconfig:noUnusedLocals=false -->
 
 ```ts
-import { createInterface } from "readline";
 import { task } from "fp-ts";
 
-const read: task.Task<string> = () =>
-  new Promise<string>((resolve) => {
-    const rl = createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
-    rl.question("", (answer) => {
-      rl.close();
-      resolve(answer);
-    });
+const wait: task.Task<void> = () =>
+  new Promise<void>((resolve) => {
+    setTimeout(resolve, 1000)
   });
 ```
 
