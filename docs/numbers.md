@@ -68,7 +68,7 @@ monoidPoint.concat({ x: 0, y: 3 }, { x: 2, y: 4 }); // { x: 2, y: 7 }
 // fp-ts version 2.13.1
 
 import { MonoidSum }  from "fp-ts/number";
-import { concatAll } from "fp-ts/Monoid";
+import { concatAll, struct } from "fp-ts/Monoid";
 
 type Point = {
   x: number;
