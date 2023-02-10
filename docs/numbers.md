@@ -12,6 +12,17 @@ const max = monoid.fold(monoid.getJoinMonoid(bounded.boundedNumber));
 
 min([5, 2, 3]); // 2
 max([5, 2, 3]); // 5
+
+// version 2.13.1
+
+import { Bounded } from "fp-ts/number";
+import * as M from "fp-ts/Monoid";
+
+const minim = M.concatAll(M.min(Bounded));
+const maxm = M.concatAll(M.max(Bounded));
+
+min([5, 2, 3]); // 2
+max([5, 2, 3]); // 5
 ```
 
 ## Sums and products
