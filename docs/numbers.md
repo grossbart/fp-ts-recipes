@@ -13,13 +13,13 @@ const max = monoid.fold(monoid.getJoinMonoid(bounded.boundedNumber));
 min([5, 2, 3]); // 2
 max([5, 2, 3]); // 5
 
-// version 2.13.1
+// fp-ts version 2.13.1
 
 import { Bounded } from "fp-ts/number";
-import * as M from "fp-ts/Monoid";
+import { concatAll, min, max } from "fp-ts/Monoid";
 
-const min = M.concatAll(M.min(Bounded));
-const max = M.concatAll(M.max(Bounded));
+const min = concatAll(min(Bounded));
+const max = concatAll(max(Bounded));
 
 min([5, 2, 3]); // 2
 max([5, 2, 3]); // 5
@@ -32,6 +32,17 @@ import { monoid } from "fp-ts";
 
 const sum = monoid.fold(monoid.monoidSum);
 const product = monoid.fold(monoid.monoidProduct);
+
+sum([1, 2, 3, 4]); // 10
+product([1, 2, 3, 4]); // 24
+
+// fp-ts version 2.13.1
+
+import { MonoidSum, MonoidProduct }  from "fp-ts/number";
+import { concatAll } from "fp-ts/Monoid";
+
+const sum = concatAll(MonoidSum);
+const product = concatAll(MonoidProduct);
 
 sum([1, 2, 3, 4]); // 10
 product([1, 2, 3, 4]); // 24
