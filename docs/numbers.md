@@ -64,6 +64,26 @@ const monoidPoint: monoid.Monoid<Point> = monoid.getStructMonoid({
 });
 
 monoidPoint.concat({ x: 0, y: 3 }, { x: 2, y: 4 }); // { x: 2, y: 7 }
+
+// fp-ts version 2.13.1
+
+import { MonoidSum }  from "fp-ts/number";
+import { concatAll } from "fp-ts/Monoid";
+
+type Point = {
+  x: number;
+  y: number;
+};
+
+const monoidPoint = struct({
+  x: MonoidSum,
+  y: MonoidSum
+});
+
+const monoidPoints = concatAll(monoidPoint);
+
+monoidPoint.concat({ x: 0, y: 3 }, { x: 2, y: 4 }); // { x: 2, y: 7 }
+monoidPoints([ { x: 2, y: 2 }, { x: 2, y: 2 }, { x: 2, y: 2 } ]) // { x: 6, y: 6 }
 ```
 
 To check whether the resulting `Point` is positive, create a predicate:
