@@ -109,6 +109,28 @@ isPositiveXY({ x: 1, y: 1 }); // true
 isPositiveXY({ x: 1, y: -1 }); // false
 isPositiveXY({ x: -1, y: 1 }); // false
 isPositiveXY({ x: -1, y: -1 }); // false
+
+// fp-ts version 2.13.1
+
+import { getMonoid } from "fp-ts/function";
+import { MonoidAll } from "fp-ts/boolean";
+
+type Point = {
+  x: number;
+  y: number;
+};
+
+const monoidPredicate = getMonoid(MonoidAll)<Point>();
+
+const isPositiveX = (p: Point) => p.x >= 0;
+const isPositiveY = (p: Point) => p.y >= 0;
+
+const isPositiveXY = monoidPredicate.concat(isPositiveX, isPositiveY);
+
+isPositiveXY({ x: 1, y: 1 }); // true
+isPositiveXY({ x: 1, y: -1 }); // false
+isPositiveXY({ x: -1, y: 1 }); // false
+isPositiveXY({ x: -1, y: -1 }); // false
 ```
 
 ## Working with optional values
