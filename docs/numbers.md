@@ -18,8 +18,8 @@ max([5, 2, 3]); // 5
 import { Bounded } from "fp-ts/number";
 import * as M from "fp-ts/Monoid";
 
-const minim = M.concatAll(M.min(Bounded));
-const maxm = M.concatAll(M.max(Bounded));
+const min = M.concatAll(M.min(Bounded));
+const max = M.concatAll(M.max(Bounded));
 
 min([5, 2, 3]); // 2
 max([5, 2, 3]); // 5
