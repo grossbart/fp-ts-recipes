@@ -30,32 +30,41 @@ product([1, 2, 3, 4]); // 24
 
 ## Working with nested structures
 
+### Object
 ```ts
 import { MonoidSum }  from "fp-ts/number";
-import { concatAll, struct, tuple } from "fp-ts/Monoid";
+import { concatAll, struct } from "fp-ts/Monoid";
 
 type PointObject = {
   x: number;
   y: number;
 };
 
-type PointArray = [number, number];
-
 const monoidPointObject = struct({
   x: MonoidSum,
   y: MonoidSum
 });
 
-const monoidPointArray = tuple(MonoidSum, MonoidSum)
-
-const monoidPointsObject = concatAll(monoidPointObject);
-const monoidPointsArray = concatAll(monoidPointArray);
+const monoidPoints = concatAll(monoidPoint);
 
 monoidPointObject.concat({ x: 0, y: 3 }, { x: 2, y: 4 }); // { x: 2, y: 7 }
 monoidPointsObject([ { x: 2, y: 2 }, { x: 2, y: 2 }, { x: 2, y: 2 } ]) // { x: 6, y: 6 }
+```
 
-monoidPointArray.concat([0, 3], [2, 4]); // { x: 2, y: 7 }
-monoidPointsArray([[2, 2], [2, 2], [2, 2]]) // { x: 6, y: 6 }
+### Tuple
+
+```ts
+import { MonoidSum }  from "fp-ts/number";
+import { concatAll, tuple } from "fp-ts/Monoid";
+
+type PointArray = [number, number];
+
+const monoidPoint = tuple(MonoidSum, MonoidSum)
+
+const monoidPoints = concatAll(monoidPoint);
+
+monoidPointArray.concat([0, 3], [2, 4]); // [2, 7]
+monoidPointsArray([[2, 2], [2, 2], [2, 2]]) // [6, 6]
 ```
 
 To check whether the resulting `Point` is positive, create a predicate:
