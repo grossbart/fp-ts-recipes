@@ -114,7 +114,7 @@ import { task } from "fp-ts";
 
 const wait: task.Task<void> = () =>
   new Promise<void>((resolve) => {
-    setTimeout(resolve, 1000)
+    setTimeout(resolve, 1000);
   });
 ```
 
