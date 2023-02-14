@@ -113,6 +113,8 @@ const monoidPredicate = getMonoid(MonoidAll)<Point>();
 const isPositiveX = (p: Point) => p[0] >= 0;
 const isPositiveY = (p: Point) => p[1] >= 0;
 
+const isPositiveXY = monoidPredicate.concat(isPositiveX, isPositiveY);
+
 isPositiveXY([1, 1]); // true
 isPositiveXY([1, -1]); // false
 isPositiveXY([-1, 1]); // false
