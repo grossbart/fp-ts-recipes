@@ -122,28 +122,35 @@ isPositiveXY([-1, 1]); // false
 ## Working with optional values
 
 ```ts
-import { monoid, option } from "fp-ts";
+import { some, none, Applicative } from "fp-ts/Option";
+import { concatAll } from "fp-ts/Monoid";
+import { MonoidSum, MonoidProduct } from "fp-ts/number";
+import { getApplicativeMonoid } from "fp-ts/Applicative";
 
-const sum = monoid.fold(option.getApplyMonoid(monoid.monoidSum));
-const product = monoid.fold(option.getApplyMonoid(monoid.monoidProduct));
+const sum = concatAll(getApplicativeMonoid(Applicative)(MonoidSum));
+const product = concatAll(getApplicativeMonoid(Applicative)(MonoidProduct));
 
-sum([option.some(2), option.none, option.some(4)]); // option.none
-sum([option.some(2), option.some(3), option.some(4)]); // option.some(9)
+sum([some(2), none, some(4)]); // none
+sum([some(2), some(3), some(4)]); // some(9)
 
-product([option.some(2), option.none, option.some(4)]); // option.none
-product([option.some(2), option.some(3), option.some(4)]); // option.some(24)
+product([some(2), none, some(4)]); // none
+product([some(2), some(3), some(4)]); // some(24)
 ```
 
 This also works for [Either](https://gcanti.github.io/fp-ts/modules/Either.ts)s, but note that folding on `Left` values does not work the same way as folding on `Right` values.
 
 ```ts
-import { either, monoid } from "fp-ts";
+import { left, right, Applicative } from "fp-ts/Either";
+import { concatAll } from "fp-ts/Monoid";
+import { MonoidSum, MonoidProduct } from "fp-ts/number";
+import { getApplicativeMonoid } from "fp-ts/Applicative";
 
-const sum = monoid.fold(either.getApplyMonoid(monoid.monoidSum));
-const product = monoid.fold(either.getApplyMonoid(monoid.monoidProduct));
+const sum = concatAll(getApplicativeMonoid(Applicative)(MonoidSum));
+const product = concatAll(getApplicativeMonoid(Applicative)(MonoidProduct));
 
-sum([either.right(2), either.left(3), either.right(4)]); // either.left(3)
-sum([either.right(2), either.right(3), either.right(4)]); // either.right(9)
-product([either.right(2), either.left(3), either.left(4)]); // either.left(3) <- it's the first either.left value
-product([either.right(2), either.right(3), either.right(4)]); // either.right(24)
+sum([right(2), left(3), right(4)]); // left(3)
+sum([right(2), right(3), right(4)]); // right(9)
+
+product([right(2), left(3), left(4)]); // left(3) <- it's the first left value
+product([right(2), right(3), right(4)]); // right(24)
 ```
