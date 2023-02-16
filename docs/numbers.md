@@ -118,7 +118,7 @@ const isPositiveXY = monoidPredicate.concat(isPositiveX, isPositiveY);
 isPositiveXY([1, 1]); // true
 isPositiveXY([1, -1]); // false
 isPositiveXY([-1, 1]); // false
-isPositiveXY([-1, 1]); // false
+isPositiveXY([-1, -1]); // false
 ```
 
 ## Working with optional values
