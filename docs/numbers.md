@@ -49,7 +49,7 @@ const monoidPoint = struct({
 const monoidPoints = concatAll(monoidPoint);
 
 monoidPoint.concat({ x: 0, y: 3 }, { x: 2, y: 4 }); // { x: 2, y: 7 }
-monoidPointsObject([
+monoidPoints([
   { x: 2, y: 2 },
   { x: 2, y: 2 },
   { x: 2, y: 2 },
