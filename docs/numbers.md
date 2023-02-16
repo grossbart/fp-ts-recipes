@@ -8,11 +8,11 @@ _fp-ts_ is not a math library, but there are some good facilities we can use to 
 import { Bounded } from "fp-ts/number";
 import { concatAll, min, max } from "fp-ts/Monoid";
 
-const min = concatAll(min(Bounded));
-const max = concatAll(max(Bounded));
+const minVal = concatAll(min(Bounded));
+const maxVal = concatAll(max(Bounded));
 
-min([5, 2, 3]); // 2
-max([5, 2, 3]); // 5
+minVal([5, 2, 3]); // 2
+maxVal([5, 2, 3]); // 5
 ```
 
 ## Sums and products
