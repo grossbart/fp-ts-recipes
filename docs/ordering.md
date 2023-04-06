@@ -95,17 +95,17 @@ Ord.between(number.Ord)(6, 9)(12); // false
 ## Sort an array
 
 ```ts
-import { array } from "fp-ts";
+import * as A from "fp-ts/Array";
 import * as number from "fp-ts/number";
 
-const sortByNumber = array.sort(number.Ord);
+const sortByNumber = A.sort(number.Ord);
 sortByNumber([3, 1, 2]); // [1, 2, 3]
 ```
 
 Sort an array of objects:
 
 ```ts
-import { array } from "fp-ts";
+import * as A from "fp-ts/Array";
 import * as Ord from "fp-ts/Ord";
 import * as number from "fp-ts/number";
 
@@ -131,6 +131,40 @@ const distanceOrd = Ord.contramap((x: Planet) => x.distance)(number.Ord);
 
 console.log("distance", A.sort(distanceOrd)(planets)); // Mercury, Venus, Earth, Mars, ...
 console.log("diameter", A.sort(diameterOrd)(planets)); // Mercury, Mars, Venus, Earth, ...
+```
+
+Sort array using two `Ord` instances using `Semigroup`. To combine more than two `Ord` instances better to use `Monoid`.
+
+```ts
+import * as A from "fp-ts/Array";
+import * as Ord from "fp-ts/Ord";
+import * as number from "fp-ts/number";
+
+type Planet = {
+  name: string;
+  diameter: number; // km
+  distance: number; // AU from Sun
+};
+
+const planets: Array<Planet> = [
+  { name: "Earth", diameter: 12756, distance: 1 },
+  { name: "Jupiter", diameter: 142800, distance: 5.203 },
+  { name: "Mars", diameter: 6779, distance: 1.524 },
+  { name: "Mercury", diameter: 4879.4, distance: 0.39 },
+  { name: "Neptune", diameter: 49528, distance: 30.06 },
+  { name: "Saturn", diameter: 120660, distance: 9.539 },
+  { name: "Uranus", diameter: 51118, distance: 19.18 },
+  { name: "Venus", diameter: 12104, distance: 0.723 },
+  { name: "Nibiru", diameter: 12104, distance: 38 },
+];
+
+const diameterOrd = Ord.contramap((x: Planet) => x.diameter)(number.Ord);
+const distanceOrd = Ord.contramap((x: Planet) => x.distance)(number.Ord);
+
+const S = Ord.getSemigroup<Planet>();
+const diameterDistanceOrd = S.concat(diameterOrd, distanceOrd);
+
+console.log("diameter-distance order", A.sort(diameterDistanceOrd)(planets)); // Mercury, Mars, Venus, Nibiru, ...
 ```
 
 ## More Ord instances
