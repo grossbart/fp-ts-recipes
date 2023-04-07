@@ -124,6 +124,8 @@ const planets: Array<Planet> = [
   { name: "Saturn", diameter: 120660, distance: 9.539 },
   { name: "Uranus", diameter: 51118, distance: 19.18 },
   { name: "Venus", diameter: 12104, distance: 0.723 },
+  { name: "Nibiru", diameter: 142400, distance: 409 },
+  { name: "Nibira", diameter: 142400, distance: 409 },
 ];
 
 const diameterOrd = Ord.contramap((x: Planet) => x.diameter)(number.Ord);
@@ -133,12 +135,14 @@ console.log("distance", A.sort(distanceOrd)(planets)); // Mercury, Venus, Earth,
 console.log("diameter", A.sort(diameterOrd)(planets)); // Mercury, Mars, Venus, Earth, ...
 ```
 
-Sort array using two `Ord` instances using `Semigroup`. To combine more than two `Ord` instances better to use `Monoid`.
+Sort array with two `Ord` instances using `Semigroup`. To combine more than two `Ord` instances use `Monoid`.
 
 ```ts
+import { concatAll } from "fp-ts/Monoid";
 import * as A from "fp-ts/Array";
 import * as Ord from "fp-ts/Ord";
 import * as number from "fp-ts/number";
+import * as string from "fp-ts/string";
 
 type Planet = {
   name: string;
@@ -155,16 +159,22 @@ const planets: Array<Planet> = [
   { name: "Saturn", diameter: 120660, distance: 9.539 },
   { name: "Uranus", diameter: 51118, distance: 19.18 },
   { name: "Venus", diameter: 12104, distance: 0.723 },
-  { name: "Nibiru", diameter: 12104, distance: 38 },
+  { name: "Nibiru", diameter: 142400, distance: 409 },
+  { name: "Nibira", diameter: 142400, distance: 409 },
 ];
 
 const diameterOrd = Ord.contramap((x: Planet) => x.diameter)(number.Ord);
 const distanceOrd = Ord.contramap((x: Planet) => x.distance)(number.Ord);
+const nameOrd = Ord.contramap((x: Planet) => x.name)(string.Ord);
 
 const S = Ord.getSemigroup<Planet>();
-const diameterDistanceOrd = S.concat(diameterOrd, distanceOrd);
+const M = Ord.getMonoid<Planet>();
 
-console.log("diameter-distance order", A.sort(diameterDistanceOrd)(planets)); // Mercury, Mars, Venus, Nibiru, ...
+const diameterDistanceOrd = S.concat(diameterOrd, distanceOrd); // combine 2 Ord
+const diameterDistanceNameOrd = concatAll(M)([diameterOrd, distanceOrd, nameOrd]); // combine 3 Ord
+
+console.log("diameter-distance order", A.sort(diameterDistanceOrd)(planets)); // Mercury, Mars, Venus, Earth, ... , Nibiru, Jupiter
+console.log("diameter-distance-name order", A.sort(diameterDistanceNameOrd)(planets)); // Mercury, Mars, Venus, Nibiru, ... , Nibira, Nibiru, Jupiret
 ```
 
 ## More Ord instances
