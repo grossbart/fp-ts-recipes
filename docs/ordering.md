@@ -102,6 +102,24 @@ const sortByNumber = A.sort(number.Ord);
 sortByNumber([3, 1, 2]); // [1, 2, 3]
 ```
 
+Sort Arrar of arrays based on `sum`:
+
+```ts
+import * as A from "fp-ts/Array";
+import * as Ord from "fp-ts/Ord";
+import * as number from "fp-ts/number";
+
+const arrayOfArrays = [
+  [3, 2, 1], // 6
+  [9, 7, 6, 8], // 30
+  [1, 4], // 5
+];
+
+const arraySumOrd = Ord.contramap(A.reduce(0, number.SemigroupSum.concat))(number.Ord);
+
+A.sort(arraySumOrd)(arrayOfArrays); // [ [ 1, 4 ], [ 3, 2, 1 ], [ 9, 7, 6, 8 ] ]
+```
+
 Sort an array of objects:
 
 ```ts
@@ -173,7 +191,7 @@ const M = Ord.getMonoid<Planet>();
 const diameterDistanceOrd = S.concat(diameterOrd, distanceOrd); // combine 2 Ord
 const diameterDistanceNameOrd = concatAll(M)([diameterOrd, distanceOrd, nameOrd]); // combine 3 Ord
 
-console.log("diameter-distance order", A.sort(diameterDistanceOrd)(planets)); // Mercury, Mars, Venus, Earth, ... , Nibiru, Jupiter
+console.log("diameter-distance order", A.sort(diameterDistanceOrd)(planets)); // Mercury, Mars, Venus, Earth, ... , Nibiru, Nibira, Jupiter
 console.log("diameter-distance-name order", A.sort(diameterDistanceNameOrd)(planets)); // Mercury, Mars, Venus, Nibiru, ... , Nibira, Nibiru, Jupiret
 ```
 
