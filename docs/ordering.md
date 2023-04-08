@@ -22,7 +22,7 @@ number.Ord.compare(4, 5); // -1
 number.Ord.compare(5, 5); // 0
 number.Ord.compare(6, 5); // 1
 
-boolean.Ord.compare(true, false);
+boolean.Ord.compare(true, false); // 1
 date.Ord.compare(new Date("1984-01-27"), new Date("1978-09-23")); // 1
 string.Ord.compare("Cyndi", "Debbie"); // -1
 ```
@@ -102,7 +102,7 @@ const sortByNumber = A.sort(number.Ord);
 sortByNumber([3, 1, 2]); // [1, 2, 3]
 ```
 
-Sort Arrar of arrays based on `sum`:
+Sort array of arrays based on `sum`:
 
 ```ts
 import * as A from "fp-ts/Array";
